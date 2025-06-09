@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High School Path Finder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>High School Path Finder</h1>
+            <p class="subtitle">Discover your perfect clubs and plan your future!</p>
+        </header>
+
+        <main>
+            <div id="welcome-section" class="section active">
+                <h2>Welcome to Your Future Planning Tool!</h2>
+                <p>This quiz will help you:</p>
+                <ul>
+                    <li>Find clubs and organizations that match your interests</li>
+                    <li>Create a personalized 4-year roadmap</li>
+                    <li>Set goals for college and career preparation</li>
+                </ul>
+                <button onclick="startQuiz()" class="btn">Start Quiz</button>
+            </div>
+
+            <div id="quiz-section" class="section hidden">
+                <div id="progress-bar">
+                    <div id="progress"></div>
+                </div>
+                <h2 id="question"></h2>
+                <div id="options" class="options-container"></div>
+            </div>
+
+            <div id="results-section" class="section hidden">
+                <h2>Your Personalized Results</h2>
+                <div class="results-container">
+                    <div id="recommended-clubs">
+                        <h3>Recommended Clubs & Organizations</h3>
+                        <div id="clubs-list"></div>
+                    </div>
+                    <div id="roadmap">
+                        <h3>Your 4-Year Roadmap</h3>
+                        <div id="roadmap-content"></div>
+                    </div>
+                </div>
+                <button onclick="restartQuiz()" class="btn">Take Quiz Again</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created with ❤️ for ambitious high school students</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
