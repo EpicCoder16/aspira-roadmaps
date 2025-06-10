@@ -586,19 +586,26 @@ let config = {
 };
 
 // Initialize the application
-async function initializeApp() {
-    // Get the base URL for the current environment
-    const baseUrl = window.location.pathname.includes('github.io') 
-        ? '/high-school-roadmap' 
-        : '';
-
-    try {
-        const importedConfig = await import(`${baseUrl}/config.js`);
-        config = importedConfig.default;
-    } catch {
-        // Silently fall back to basic recommendations
-        config.OPENROUTER_API_KEY = null;
+function initializeApp() {
+    // Check if we're on GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    
+    if (!isGitHubPages) {
+        // Only try to load config if we're not on GitHub Pages
+        import('./config.js')
+            .then(importedConfig => {
+                config = importedConfig.default;
+            })
+            .catch(() => {
+                console.log('Using fallback recommendation system');
+                config.OPENROUTER_API_KEY = null;
+            });
     }
+
+    // Add event listeners
+    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
+    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
 }
 
 // Quiz functions
@@ -706,11 +713,15 @@ function updateProgress() {
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
-// Update the getAIRecommendations function to handle missing API key
+// Update the getAIRecommendations function
 async function getAIRecommendations(userResponses) {
+    // Check if we're on GitHub Pages
+    if (window.location.hostname.includes('github.io')) {
+        return null; // Always use basic recommendations on GitHub Pages
+    }
+
     // If no API key is available, use basic recommendations
     if (!config.OPENROUTER_API_KEY) {
-        console.log('No API key available, using basic recommendations');
         return null;
     }
 
@@ -730,7 +741,7 @@ async function getAIRecommendations(userResponses) {
                     content: `Based on the following student responses, recommend the most suitable clubs, activities, and opportunities. Consider all aspects of their interests and goals:
                     
                     ${questions.map((q, i) => `${q.question}
-                    Answer: ${userAnswers[i].map(idx => q.options[idx]).join(', ')}`).join('\n\n')}
+                    Answer: ${userResponses[i].map(idx => q.options[idx]).join(', ')}`).join('\n\n')}
                     
                     Please provide recommendations in this exact JSON format:
                     {
@@ -755,17 +766,15 @@ async function getAIRecommendations(userResponses) {
         const data = await response.json();
         
         if (!data || !data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
-            console.error('Invalid response format from AI:', data);
             return null;
         }
         
-        // Extract JSON from Mistral's response
+        // Extract JSON from response
         const responseText = data.choices[0].message.content;
         const jsonStart = responseText.indexOf('{');
         const jsonEnd = responseText.lastIndexOf('}') + 1;
         
         if (jsonStart === -1 || jsonEnd <= jsonStart) {
-            console.error('No valid JSON found in response:', responseText);
             return null;
         }
         
@@ -774,16 +783,13 @@ async function getAIRecommendations(userResponses) {
         try {
             const parsed = JSON.parse(jsonStr);
             if (!parsed || !parsed.categories || !Array.isArray(parsed.categories)) {
-                console.error('Invalid JSON structure:', parsed);
                 return null;
             }
             return parsed;
-        } catch (parseError) {
-            console.error('Error parsing AI response:', parseError);
+        } catch {
             return null;
         }
-    } catch (error) {
-        console.error('Error getting AI recommendations:', error);
+    } catch {
         return null;
     }
 }
@@ -1424,15 +1430,4 @@ async function downloadPDF() {
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the app
-    initializeApp().catch(() => {
-        // Ensure we have a fallback if anything goes wrong
-        config.OPENROUTER_API_KEY = null;
-    });
-
-    // Add event listeners
-    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
-    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
-    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
-});
+document.addEventListener('DOMContentLoaded', initializeApp);
