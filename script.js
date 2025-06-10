@@ -578,37 +578,10 @@ const clubProgressions = {
     }
 };
 
-// Initialize variables
 let currentQuestion = 0;
 let userAnswers = [];
-let config = {
-    OPENROUTER_API_KEY: null
-};
 
-// Initialize the application
-function initializeApp() {
-    // Check if we're on GitHub Pages
-    const isGitHubPages = window.location.hostname.includes('github.io');
-    
-    if (!isGitHubPages) {
-        // Only try to load config if we're not on GitHub Pages
-        import('./config.js')
-            .then(importedConfig => {
-                config = importedConfig.default;
-            })
-            .catch(() => {
-                console.log('Using fallback recommendation system');
-                config.OPENROUTER_API_KEY = null;
-            });
-    }
-
-    // Add event listeners
-    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
-    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
-    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
-}
-
-// Quiz functions
+// Initialize the quiz
 function startQuiz() {
     document.getElementById('welcome-section').classList.remove('active');
     document.getElementById('welcome-section').classList.add('hidden');
@@ -713,86 +686,78 @@ function updateProgress() {
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
-// Update the getAIRecommendations function
+// Add OpenRouter integration
 async function getAIRecommendations(userResponses) {
-    // Check if we're on GitHub Pages
-    if (window.location.hostname.includes('github.io')) {
-        return null; // Always use basic recommendations on GitHub Pages
-    }
-
-    // If no API key is available, use basic recommendations
-    if (!config.OPENROUTER_API_KEY) {
-        return null;
-    }
-
     try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        // Build the prompt string using student responses
+        const userPrompt = `Based on the following student responses, recommend the most suitable clubs, activities, and opportunities. Consider all aspects of their interests and goals:
+
+${questions.map((q, i) => `${q.question}
+Answer: ${userAnswers[i].map(idx => q.options[idx]).join(', ')}`).join('\n\n')}
+
+Please provide recommendations in this exact JSON format:
+{
+    "categories": [
+        {
+            "name": "Category Name",
+            "clubs": [
+                {
+                    "name": "Club Name",
+                    "description": "Club Description",
+                    "url": "Optional URL"
+                }
+            ],
+            "explanation": "Why this category fits the student"
+        }
+    ]
+}`;
+
+        // Secure call to your Edge Function instead of OpenRouter directly
+        const response = await fetch('/api/ask-ai', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.OPENROUTER_API_KEY}`,
-                'HTTP-Referer': window.location.href,
-                'X-Title': 'High School Path Finder'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                model: 'mistralai/mistral-7b-instruct:free',
-                messages: [{
-                    role: 'user',
-                    content: `Based on the following student responses, recommend the most suitable clubs, activities, and opportunities. Consider all aspects of their interests and goals:
-                    
-                    ${questions.map((q, i) => `${q.question}
-                    Answer: ${userResponses[i].map(idx => q.options[idx]).join(', ')}`).join('\n\n')}
-                    
-                    Please provide recommendations in this exact JSON format:
-                    {
-                        "categories": [
-                            {
-                                "name": "Category Name",
-                                "clubs": [
-                                    {
-                                        "name": "Club Name",
-                                        "description": "Club Description",
-                                        "url": "Optional URL"
-                                    }
-                                ],
-                                "explanation": "Why this category fits the student"
-                            }
-                        ]
-                    }`
-                }]
-            })
+            body: JSON.stringify({ prompt: userPrompt })
         });
 
         const data = await response.json();
-        
+
         if (!data || !data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
+            console.error('Invalid response format from AI:', data);
             return null;
         }
-        
-        // Extract JSON from response
+
+        // Extract JSON content from AI response
         const responseText = data.choices[0].message.content;
         const jsonStart = responseText.indexOf('{');
         const jsonEnd = responseText.lastIndexOf('}') + 1;
-        
+
         if (jsonStart === -1 || jsonEnd <= jsonStart) {
+            console.error('No valid JSON found in response:', responseText);
             return null;
         }
-        
+
         const jsonStr = responseText.slice(jsonStart, jsonEnd);
-        
+
         try {
             const parsed = JSON.parse(jsonStr);
             if (!parsed || !parsed.categories || !Array.isArray(parsed.categories)) {
+                console.error('Invalid JSON structure:', parsed);
                 return null;
             }
             return parsed;
-        } catch {
+        } catch (parseError) {
+            console.error('Error parsing AI response:', parseError);
             return null;
         }
-    } catch {
+
+    } catch (error) {
+        console.error('Error getting AI recommendations:', error);
         return null;
     }
 }
+
 
 // Update the generateRecommendations function
 async function generateRecommendations() {
@@ -1428,6 +1393,3 @@ async function downloadPDF() {
     // Save the PDF
     doc.save("high-school-roadmap.pdf");
 }
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeApp);

@@ -1,157 +1,64 @@
 # High School Path Finder
 
-An interactive web application that helps high school students discover suitable clubs, create a 4-year roadmap, and plan their academic journey. The app provides personalized recommendations based on students' interests, goals, and college aspirations.
+An interactive web application that helps high school students discover clubs and organizations that match their interests, while also providing a comprehensive 4-year roadmap for achieving their academic and career goals.
 
 ## Features
 
-- Interactive quiz system with multiple-choice questions
-- Personalized club recommendations using AI
-- Detailed 4-year academic roadmap
-- Summer program suggestions
-- College preparation guidance
-- Downloadable PDF reports
+- Interactive quiz to assess student interests and goals
+- Personalized club and organization recommendations
+- Detailed 4-year roadmap covering:
+  - Academic planning
+  - Extracurricular activities
+  - College preparation
+  - Career development
 - Mobile-responsive design
+- Easy-to-use interface
 
-## Setup Instructions
+## How to Use
 
-1. Clone the repository:
-```bash
-git clone <your-repository-url>
-cd highschoolquiz
-```
+1. Open `index.html` in your web browser
+2. Click "Start Quiz" to begin
+3. Answer the questions about your interests and goals
+4. Review your personalized recommendations and roadmap
+5. Use the "Take Quiz Again" button to restart if desired
 
-2. Set up the configuration:
-   - Copy `config.sample.js` to `config.js`
-   - Get an API key from [OpenRouter](https://openrouter.ai/)
-   - Replace the placeholder in `config.js` with your API key
+## Technical Details
 
-3. Serve the application (choose one method):
-   
-   Using Python (recommended):
-   ```bash
-   # If you have Python 3:
-   python3 -m http.server 8000
-   
-   # If you have Python 2:
-   python -m SimpleHTTPServer 8000
-   ```
-   
-   Using VS Code:
-   - Install the "Live Server" extension
-   - Right-click on `index.html`
-   - Select "Open with Live Server"
-   
-   Using Node.js:
-   ```bash
-   # Install a simple server globally
-   npm install -g http-server
-   
-   # Run the server
-   http-server
-   ```
-
-4. Access the application:
-   - Open your browser
-   - Go to `http://localhost:8000` (or the URL provided by your chosen server)
-   - The application should now work correctly with all features
-
-## Files to Upload to GitHub
-
-Upload these files:
-```
-├── index.html
-├── styles.css
-├── script.js
-├── config.sample.js
-├── .gitignore
-└── README.md
-```
-
-Do NOT upload:
-- `config.js` (contains your private API key)
-- `.vscode/` directory
-- Any other IDE-specific files
-- `node_modules/` (if you add npm packages later)
-
-## GitHub Upload Instructions
-
-1. Create a new repository on GitHub
-
-2. Initialize Git in your local directory (if not already done):
-```bash
-git init
-```
-
-3. Add and commit the files:
-```bash
-git add index.html styles.css script.js config.sample.js .gitignore README.md
-git commit -m "Initial commit"
-```
-
-4. Link to your GitHub repository:
-```bash
-git remote add origin <your-repository-url>
-git branch -M main
-git push -u origin main
-```
-
-## Security Notes
-
-- Never commit `config.js` with your actual API key
-- Always check that `config.js` is in your `.gitignore`
-- Use `config.sample.js` as a template for other developers
-
-## Development
-
-To modify or enhance the application:
-1. Make sure you have a working `config.js` with valid API key
-2. Test all changes locally before committing
-3. Keep the API key secure and never share it publicly
-
-## Dependencies
-
-- jsPDF (for PDF generation)
-- html2canvas (for PDF generation)
-- OpenRouter API (for AI-powered recommendations)
+This project is built using:
+- HTML5
+- CSS3 (with modern features like Grid and Flexbox)
+- Vanilla JavaScript (ES6+)
 - Google Fonts (Poppins)
 
-## Browser Support
+## Hosting on GitHub Pages
 
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
+To host this project on GitHub Pages:
 
-## License
+1. Create a new repository on GitHub
+2. Upload all files to the repository
+3. Go to repository Settings > Pages
+4. Select the main branch as the source
+5. Your site will be available at `https://[username].github.io/[repository-name]`
 
-MIT License - Feel free to use and modify for your needs.
+## Project Structure
+
+```
+highschoolquiz/
+├── index.html      # Main HTML file
+├── styles.css      # Styling
+├── script.js       # Quiz logic and functionality
+└── README.md       # Documentation
+```
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request 
+Feel free to fork this project and make improvements. Some potential areas for enhancement:
+- Add more detailed career path information
+- Include college major recommendations
+- Add more specific extracurricular activities
+- Enhance the recommendation algorithm
+- Add data persistence
 
-## Deployment
+## License
 
-### Local Development
-For local development with AI-powered recommendations:
-1. Follow the setup instructions above
-2. Make sure to create `config.js` with your OpenRouter API key
-3. Use a local server to test all features
-
-### GitHub Pages Deployment
-The application can run on GitHub Pages with basic recommendations (no API key required):
-1. Push your code to GitHub (excluding `config.js`)
-2. Go to repository Settings > Pages
-3. Select the main branch as the source
-4. Your site will be available at `https://[username].github.io/[repository-name]`
-
-Note: When deployed on GitHub Pages, the application will use a basic recommendation system instead of AI-powered recommendations. This is for security reasons, as we cannot include API keys in public repositories.
-
-To use AI-powered recommendations:
-- Clone the repository locally
-- Set up `config.js` with your API key
-- Run the application on a local server 
+This project is open source and available under the MIT License. 

@@ -25,7 +25,7 @@
                     <li>Create a personalized 4-year roadmap</li>
                     <li>Set goals for college and career preparation</li>
                 </ul>
-                <button id="start-quiz-btn" class="btn">Start Quiz</button>
+                <button onclick="startQuiz()" class="btn">Start Quiz</button>
             </div>
 
             <div id="quiz-section" class="section hidden">
@@ -39,8 +39,8 @@
             <div id="results-section" class="section hidden">
                 <h2>Your Personalized Results</h2>
                 <div class="button-container">
-                    <button id="download-pdf-btn" class="btn download-btn">Download PDF Roadmap</button>
-                    <button id="restart-quiz-btn" class="btn">Take Quiz Again</button>
+                    <button onclick="downloadPDF()" class="btn download-btn">Download PDF Roadmap</button>
+                    <button onclick="restartQuiz()" class="btn">Take Quiz Again</button>
                 </div>
                 <div class="results-container">
                     <div id="recommended-clubs">
@@ -59,7 +59,6 @@
             <p>Created with ❤️ for ambitious high school students</p>
         </footer>
     </div>
-    <!-- Load the script at the end of body -->
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html> 
