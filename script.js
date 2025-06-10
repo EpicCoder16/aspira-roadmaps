@@ -1,15 +1,3 @@
-// Try to import configuration, use fallback if not available
-let config = {
-    OPENROUTER_API_KEY: null // Will be populated from config.js if available
-};
-
-try {
-    const importedConfig = await import('./config.js');
-    config = importedConfig.default;
-} catch (error) {
-    console.log('Using fallback recommendation system');
-}
-
 // Quiz questions and options
 const questions = [
     {
@@ -590,18 +578,30 @@ const clubProgressions = {
     }
 };
 
-// Initialize event listeners when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Add event listeners for buttons
-    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
-    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
-    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
-});
-
+// Initialize variables
 let currentQuestion = 0;
 let userAnswers = [];
+let config = {
+    OPENROUTER_API_KEY: null
+};
 
-// Initialize the quiz
+// Initialize the application
+async function initializeApp() {
+    // Get the base URL for the current environment
+    const baseUrl = window.location.pathname.includes('github.io') 
+        ? '/high-school-roadmap' 
+        : '';
+
+    try {
+        const importedConfig = await import(`${baseUrl}/config.js`);
+        config = importedConfig.default;
+    } catch {
+        // Silently fall back to basic recommendations
+        config.OPENROUTER_API_KEY = null;
+    }
+}
+
+// Quiz functions
 function startQuiz() {
     document.getElementById('welcome-section').classList.remove('active');
     document.getElementById('welcome-section').classList.add('hidden');
@@ -1422,3 +1422,17 @@ async function downloadPDF() {
     // Save the PDF
     doc.save("high-school-roadmap.pdf");
 }
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the app
+    initializeApp().catch(() => {
+        // Ensure we have a fallback if anything goes wrong
+        config.OPENROUTER_API_KEY = null;
+    });
+
+    // Add event listeners
+    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
+    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
+});
