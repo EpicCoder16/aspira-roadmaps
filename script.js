@@ -1,3 +1,6 @@
+// Import configuration
+import config from './config.js';
+
 // Quiz questions and options
 const questions = [
     {
@@ -318,6 +321,266 @@ const resources = {
     }
 };
 
+// Add field-specific resources
+const fieldResources = {
+    STEM: {
+        title: "STEM Opportunities",
+        links: [
+            { name: "NASA High School Internships", url: "https://intern.nasa.gov/", description: "Space and aeronautics research opportunities" },
+            { name: "Research Science Institute (RSI)", url: "https://www.cee.org/programs/research-science-institute", description: "Summer research program at MIT" },
+            { name: "Science Internship Program (SIP)", url: "https://ucsc-sip.org/", description: "UCSC research internships" },
+            { name: "Google Science Fair", url: "https://www.googlesciencefair.com/", description: "International science competition" },
+            { name: "NIH High School Programs", url: "https://www.training.nih.gov/programs/hs_student_resources", description: "Biomedical research opportunities" }
+        ]
+    },
+    Healthcare: {
+        title: "Healthcare & Medical Opportunities",
+        links: [
+            { name: "Stanford Medical Youth Science Program", url: "https://smysp.stanford.edu/", description: "Summer medical program" },
+            { name: "NIH High School Summer Internship", url: "https://www.training.nih.gov/programs/hs-sip", description: "Biomedical research" },
+            { name: "Local Hospital Volunteer Programs", url: "https://www.volunteermatch.org/search?l=&k=hospital", description: "Find hospital volunteering opportunities" },
+            { name: "Red Cross Volunteer", url: "https://www.redcross.org/volunteer/become-a-volunteer.html", description: "Healthcare-related volunteering" }
+        ]
+    },
+    Business: {
+        title: "Business & Entrepreneurship Opportunities",
+        links: [
+            { name: "Junior Achievement", url: "https://www.juniorachievement.org/", description: "Business and entrepreneurship programs" },
+            { name: "Goldman Sachs High School Programs", url: "https://www.goldmansachs.com/careers/students/programs/", description: "Finance exposure programs" },
+            { name: "Young Entrepreneurs Academy", url: "https://yeausa.org/", description: "Start your own business" },
+            { name: "NFTE Programs", url: "https://www.nfte.com/", description: "Entrepreneurship education" }
+        ]
+    },
+    Arts: {
+        title: "Arts & Creative Opportunities",
+        links: [
+            { name: "National YoungArts Foundation", url: "https://www.youngarts.org/", description: "Arts recognition and opportunities" },
+            { name: "Scholastic Art & Writing Awards", url: "https://www.artandwriting.org/", description: "Recognition for creative work" },
+            { name: "Summer Arts Programs Search", url: "https://www.teenlife.com/search?q=summer%20arts", description: "Find summer arts programs" },
+            { name: "Getty Museum Internships", url: "https://www.getty.edu/education/college/multicultural/", description: "Museum experience" }
+        ]
+    },
+    Technology: {
+        title: "Technology & Computing Opportunities",
+        links: [
+            { name: "Microsoft High School Programs", url: "https://careers.microsoft.com/students/", description: "Tech industry exposure" },
+            { name: "Girls Who Code Programs", url: "https://girlswhocode.com/programs/", description: "Coding programs for girls" },
+            { name: "Code.org Projects", url: "https://code.org/learn", description: "Learn programming" },
+            { name: "GitHub Student Developer Pack", url: "https://education.github.com/pack", description: "Free developer tools" }
+        ]
+    }
+};
+
+// Add internship and opportunity resources
+const opportunityResources = {
+    internships: {
+        title: "Find Internships",
+        links: [
+            { name: "Chegg Internships", url: "https://www.internships.com/high-school", description: "High school internship database" },
+            { name: "WayUp", url: "https://www.wayup.com/", description: "Entry-level jobs and internships" },
+            { name: "LinkedIn Youth Opportunities", url: "https://www.linkedin.com/jobs/youth-jobs/", description: "Network for opportunities" },
+            { name: "Indeed High School Jobs", url: "https://www.indeed.com/q-High-School-Student-jobs.html", description: "Job search platform" }
+        ]
+    },
+    volunteer: {
+        title: "Volunteer Opportunities",
+        links: [
+            { name: "VolunteerMatch", url: "https://www.volunteermatch.org/", description: "Find local opportunities" },
+            { name: "DoSomething.org", url: "https://www.dosomething.org/us", description: "Youth volunteer campaigns" },
+            { name: "United Way", url: "https://www.unitedway.org/get-involved/volunteer", description: "Community service" }
+        ]
+    },
+    competitions: {
+        title: "Academic Competitions",
+        links: [
+            { name: "Intel ISEF", url: "https://www.societyforscience.org/isef/", description: "International science fair" },
+            { name: "Congressional App Challenge", url: "https://www.congressionalappchallenge.us/", description: "Coding competition" },
+            { name: "National History Day", url: "https://www.nhd.org/", description: "History competition" },
+            { name: "Poetry Out Loud", url: "https://www.poetryoutloud.org/", description: "Poetry competition" }
+        ]
+    }
+};
+
+// Add specific summer programs by field
+const summerPrograms = {
+    STEM: {
+        title: "Recommended STEM Summer Programs",
+        links: [
+            { 
+                name: "MIT Research Science Institute (RSI)", 
+                url: "https://www.cee.org/programs/research-science-institute",
+                description: "Highly selective research program at MIT for rising seniors",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "Stanford Institutes of Medicine Summer Research Program", 
+                url: "https://simr.stanford.edu/",
+                description: "8-week research program for rising seniors interested in medicine/bioscience",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "Google Computer Science Summer Institute", 
+                url: "https://buildyourfuture.withgoogle.com/programs/computer-science-summer-institute",
+                description: "3-week introduction to computer science for rising college freshmen",
+                yearRecommended: "Senior Summer"
+            },
+            { 
+                name: "Michigan Math and Science Scholars", 
+                url: "https://mmss.umich.edu/",
+                description: "2-week program for sophomores and juniors interested in STEM",
+                yearRecommended: "Sophomore Summer"
+            }
+        ]
+    },
+    Business: {
+        title: "Recommended Business Summer Programs",
+        links: [
+            { 
+                name: "Wharton Global Youth Program", 
+                url: "https://globalyouth.wharton.upenn.edu/summer-high-school-programs/",
+                description: "Prestigious business program at Wharton for rising juniors and seniors",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "Yale Young Global Scholars - Business Track", 
+                url: "https://globalscholars.yale.edu/",
+                description: "2-week intensive program covering business and leadership",
+                yearRecommended: "Sophomore/Junior Summer"
+            },
+            { 
+                name: "Babson Summer Study", 
+                url: "https://www.babson.edu/academics/extended-education/high-school-programs/summer-study/",
+                description: "Learn entrepreneurship at a top business school",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "Berkeley Business Academy for Youth", 
+                url: "https://haas.berkeley.edu/business-academy/",
+                description: "2-week program introducing business concepts",
+                yearRecommended: "Sophomore Summer"
+            }
+        ]
+    },
+    Arts: {
+        title: "Recommended Arts Summer Programs",
+        links: [
+            { 
+                name: "Rhode Island School of Design Pre-College", 
+                url: "https://precollege.risd.edu/",
+                description: "6-week intensive art program for high school students",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "Interlochen Summer Arts Camp", 
+                url: "https://www.interlochen.org/summer-arts-camp",
+                description: "Prestigious summer arts program covering multiple disciplines",
+                yearRecommended: "Any Summer"
+            },
+            { 
+                name: "NYU Tisch Summer High School", 
+                url: "https://tisch.nyu.edu/special-programs/high-school-programs",
+                description: "Programs in various arts disciplines",
+                yearRecommended: "Junior Summer"
+            }
+        ]
+    },
+    Healthcare: {
+        title: "Recommended Healthcare Summer Programs",
+        links: [
+            { 
+                name: "Penn Medicine Summer Program", 
+                url: "https://www.pennmedicine.org/departments-and-centers/department-of-medicine/education-and-training/high-school-pipeline-program",
+                description: "Medical research and shadowing program",
+                yearRecommended: "Junior Summer"
+            },
+            { 
+                name: "NIH Summer Internship Program", 
+                url: "https://www.training.nih.gov/programs/hs-sip",
+                description: "Research internship at the National Institutes of Health",
+                yearRecommended: "Junior Summer"
+            }
+        ]
+    }
+};
+
+// Add specific club progression paths
+const clubProgressions = {
+    STEM: {
+        title: "Recommended STEM Club Progression",
+        paths: [
+            {
+                club: "Science Olympiad",
+                progression: [
+                    { year: "Freshman", goal: "Join team and participate in 2-3 events" },
+                    { year: "Sophomore", goal: "Specialize in specific events and aim for regional medals" },
+                    { year: "Junior", goal: "Lead study sessions and compete at state level" },
+                    { year: "Senior", goal: "Team captain or event leader, mentor younger members" }
+                ]
+            },
+            {
+                club: "Robotics Club",
+                progression: [
+                    { year: "Freshman", goal: "Join FIRST Robotics team, learn basic programming/building" },
+                    { year: "Sophomore", goal: "Lead a sub-team (programming, mechanical, electrical)" },
+                    { year: "Junior", goal: "Competition team leader, develop team strategy" },
+                    { year: "Senior", goal: "Team captain, manage project timeline and resources" }
+                ]
+            }
+        ]
+    },
+    Business: {
+        title: "Recommended Business Club Progression",
+        paths: [
+            {
+                club: "FBLA (Future Business Leaders of America)",
+                progression: [
+                    { year: "Freshman", goal: "Join FBLA and participate in one competitive event" },
+                    { year: "Sophomore", goal: "Compete in multiple events, join a committee" },
+                    { year: "Junior", goal: "Run for chapter officer position, aim for state competition" },
+                    { year: "Senior", goal: "Chapter President or State Officer, national competition" }
+                ]
+            },
+            {
+                club: "DECA",
+                progression: [
+                    { year: "Freshman", goal: "Join and learn about business competitions" },
+                    { year: "Sophomore", goal: "Compete in regional events, take on project lead role" },
+                    { year: "Junior", goal: "Officer position, mentor new members, state competition" },
+                    { year: "Senior", goal: "Chapter leadership, international competition" }
+                ]
+            }
+        ]
+    },
+    Arts: {
+        title: "Recommended Arts Club Progression",
+        paths: [
+            {
+                club: "National Art Honor Society",
+                progression: [
+                    { year: "Freshman", goal: "Join and participate in art exhibitions" },
+                    { year: "Sophomore", goal: "Lead art workshops, organize exhibitions" },
+                    { year: "Junior", goal: "Officer position, curate school gallery" },
+                    { year: "Senior", goal: "President, organize community art events" }
+                ]
+            }
+        ]
+    },
+    Leadership: {
+        title: "Recommended Leadership Club Progression",
+        paths: [
+            {
+                club: "Student Government",
+                progression: [
+                    { year: "Freshman", goal: "Class representative or committee member" },
+                    { year: "Sophomore", goal: "Committee chair or class officer" },
+                    { year: "Junior", goal: "Executive board position" },
+                    { year: "Senior", goal: "Student Body President or Vice President" }
+                ]
+            }
+        ]
+    }
+};
+
 let currentQuestion = 0;
 let userAnswers = [];
 
@@ -346,13 +609,18 @@ function showQuestion() {
         optionsContainer.appendChild(button);
     });
 
-    // Add next button if it's a multiple choice question
+    // Add next button in a separate container if it's a multiple choice question
     if (questionData.multiple) {
+        const nextButtonContainer = document.createElement('div');
+        nextButtonContainer.className = 'next-button-container';
+        
         const nextButton = document.createElement('button');
         nextButton.className = 'btn';
         nextButton.textContent = 'Next';
         nextButton.onclick = () => nextQuestion();
-        optionsContainer.appendChild(nextButton);
+        
+        nextButtonContainer.appendChild(nextButton);
+        document.getElementById('quiz-section').appendChild(nextButtonContainer);
     }
 
     updateProgress();
@@ -385,6 +653,12 @@ function selectOption(index, multiple) {
 
 // Move to next question or show results
 function nextQuestion() {
+    // Remove the next button container if it exists
+    const nextButtonContainer = document.querySelector('.next-button-container');
+    if (nextButtonContainer) {
+        nextButtonContainer.remove();
+    }
+
     if (!userAnswers[currentQuestion]) {
         alert('Please select at least one option!');
         return;
@@ -415,20 +689,92 @@ function updateProgress() {
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
-// Generate and display results
-function showResults() {
-    document.getElementById('quiz-section').classList.add('hidden');
-    document.getElementById('results-section').classList.remove('hidden');
-    
-    const recommendations = generateRecommendations();
-    const roadmap = generateRoadmap();
-    
-    displayClubRecommendations(recommendations);
-    displayRoadmap(roadmap);
+// Update the getAIRecommendations function
+async function getAIRecommendations(userResponses) {
+    try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${config.OPENROUTER_API_KEY}`,
+                'HTTP-Referer': window.location.href,
+                'X-Title': 'High School Path Finder'
+            },
+            body: JSON.stringify({
+                model: 'mistralai/mistral-7b-instruct:free',
+                messages: [{
+                    role: 'user',
+                    content: `Based on the following student responses, recommend the most suitable clubs, activities, and opportunities. Consider all aspects of their interests and goals:
+                    
+                    ${questions.map((q, i) => `${q.question}
+                    Answer: ${userAnswers[i].map(idx => q.options[idx]).join(', ')}`).join('\n\n')}
+                    
+                    Please provide recommendations in this exact JSON format:
+                    {
+                        "categories": [
+                            {
+                                "name": "Category Name",
+                                "clubs": [
+                                    {
+                                        "name": "Club Name",
+                                        "description": "Club Description",
+                                        "url": "Optional URL"
+                                    }
+                                ],
+                                "explanation": "Why this category fits the student"
+                            }
+                        ]
+                    }`
+                }]
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!data || !data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
+            console.error('Invalid response format from AI:', data);
+            return null;
+        }
+        
+        // Extract JSON from Mistral's response
+        const responseText = data.choices[0].message.content;
+        const jsonStart = responseText.indexOf('{');
+        const jsonEnd = responseText.lastIndexOf('}') + 1;
+        
+        if (jsonStart === -1 || jsonEnd <= jsonStart) {
+            console.error('No valid JSON found in response:', responseText);
+            return null;
+        }
+        
+        const jsonStr = responseText.slice(jsonStart, jsonEnd);
+        
+        try {
+            const parsed = JSON.parse(jsonStr);
+            if (!parsed || !parsed.categories || !Array.isArray(parsed.categories)) {
+                console.error('Invalid JSON structure:', parsed);
+                return null;
+            }
+            return parsed;
+        } catch (parseError) {
+            console.error('Error parsing AI response:', parseError);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error getting AI recommendations:', error);
+        return null;
+    }
 }
 
-// Generate club recommendations based on answers
-function generateRecommendations() {
+// Update the generateRecommendations function
+async function generateRecommendations() {
+    // Try to get AI-powered recommendations first
+    const aiRecommendations = await getAIRecommendations(userAnswers);
+    
+    if (aiRecommendations && aiRecommendations.categories && aiRecommendations.categories.length > 0) {
+        return aiRecommendations.categories;
+    }
+    
+    // Fall back to basic recommendations if AI fails
     const interests = {
         STEM: 0,
         Arts: 0,
@@ -437,69 +783,194 @@ function generateRecommendations() {
         Athletics: 0
     };
 
-    // Analyze answers to determine interests
+    // Enhanced scoring system using all questions
     userAnswers.forEach((answer, questionIndex) => {
         answer.forEach(optionIndex => {
-            switch(questionIndex) {
-                case 0: // Subjects
-                    if (optionIndex === 0 || optionIndex === 3) interests.STEM++;
-                    if (optionIndex === 1 || optionIndex === 2) interests.Arts++;
-                    break;
-                case 1: // Free time
-                    if (optionIndex === 1) interests.STEM++;
-                    if (optionIndex === 2) interests.Service++;
-                    if (optionIndex === 3) interests.Athletics++;
-                    if (optionIndex === 4) interests.Leadership++;
-                    break;
-                case 2: // Career
-                    if (optionIndex === 0) interests.STEM += 2;
-                    if (optionIndex === 1) interests.Arts += 2;
-                    if (optionIndex === 2) interests.Leadership += 2;
-                    break;
-                case 3: // Skills
-                    if (optionIndex === 0) interests.Leadership++;
-                    if (optionIndex === 1) interests.STEM++;
-                    if (optionIndex === 2) interests.Arts++;
-                    break;
+            // Subject interests (Q0)
+            if (questionIndex === 0) {
+                if (optionIndex === 0 || optionIndex === 3) interests.STEM += 2;
+                if (optionIndex === 1 || optionIndex === 2) interests.Arts += 2;
+                if (optionIndex === 4) interests.Service += 1;
+            }
+            // Free time (Q1)
+            else if (questionIndex === 1) {
+                if (optionIndex === 0) interests.STEM += 1;
+                if (optionIndex === 1) interests.STEM += 1;
+                if (optionIndex === 2) interests.Service += 2;
+                if (optionIndex === 3) interests.Athletics += 2;
+                if (optionIndex === 4) interests.Leadership += 2;
+            }
+            // Career aspirations (Q2)
+            else if (questionIndex === 2) {
+                if (optionIndex === 0) interests.STEM += 3;
+                if (optionIndex === 1) interests.Arts += 3;
+                if (optionIndex === 2) interests.Leadership += 3;
+                if (optionIndex === 3) {
+                    interests.STEM += 2;
+                    interests.Service += 1;
+                }
+                if (optionIndex === 4) interests.Service += 3;
+            }
+            // Skills to develop (Q6)
+            else if (questionIndex === 6) {
+                if (optionIndex === 0) interests.Leadership += 2;
+                if (optionIndex === 1) interests.STEM += 2;
+                if (optionIndex === 2) interests.Arts += 2;
+                if (optionIndex === 3) interests.Leadership += 1;
+                if (optionIndex === 4) interests.STEM += 1;
+            }
+            // Summer activities (Q7)
+            else if (questionIndex === 7) {
+                if (optionIndex === 0) interests.STEM += 1;
+                if (optionIndex === 1) interests.STEM += 1;
+                if (optionIndex === 2) interests.Service += 2;
+                if (optionIndex === 3) interests.Athletics += 1;
+                if (optionIndex === 4) interests.Arts += 2;
+            }
+            // Leadership goals (Q9)
+            else if (questionIndex === 9) {
+                if (optionIndex === 0 || optionIndex === 1) interests.Leadership += 3;
+                if (optionIndex === 2) interests.Athletics += 2;
+                if (optionIndex === 3) interests.Leadership += 1;
             }
         });
     });
 
-    // Sort interests by score
-    const sortedInterests = Object.entries(interests)
+    // Sort interests by score and get top categories
+    const topCategories = Object.entries(interests)
         .sort(([,a], [,b]) => b - a)
         .slice(0, 3)
-        .map(([category]) => category);
+        .map(([category]) => ({
+            name: category,
+            clubs: clubs[category] || [],
+            explanation: `Based on your responses, you show a strong interest in ${category.toLowerCase()} activities.`
+        }));
 
-    return sortedInterests;
+    return topCategories;
+}
+
+// Update showResults to handle async recommendations and errors
+async function showResults() {
+    try {
+        // Hide quiz section and show results section
+        const quizSection = document.getElementById('quiz-section');
+        const resultsSection = document.getElementById('results-section');
+        
+        if (!quizSection || !resultsSection) {
+            throw new Error('Required sections not found in DOM');
+        }
+        
+        quizSection.classList.add('hidden');
+        resultsSection.classList.remove('hidden');
+        
+        // Show loading state
+        const resultsContainer = document.querySelector('.results-container');
+        if (!resultsContainer) {
+            throw new Error('Results container not found');
+        }
+        
+        resultsContainer.innerHTML = '<div class="loading">Generating your personalized recommendations...</div>';
+        
+        // Get recommendations and roadmap
+        const recommendations = await generateRecommendations();
+        const roadmap = generateRoadmap();
+        
+        if (!recommendations || !Array.isArray(recommendations) || recommendations.length === 0) {
+            throw new Error('Failed to generate valid recommendations');
+        }
+        
+        // Initialize the results container with required structure
+        resultsContainer.innerHTML = `
+            <div id="recommended-clubs">
+                <h3>Recommended Clubs & Organizations</h3>
+                <div id="clubs-list"></div>
+            </div>
+            <div id="roadmap">
+                <h3>Your 4-Year Roadmap</h3>
+                <div id="roadmap-content"></div>
+            </div>
+        `;
+        
+        // Display results
+        displayClubRecommendations(recommendations);
+        displayRoadmap(roadmap);
+        
+    } catch (error) {
+        console.error('Error showing results:', error);
+        const resultsContainer = document.querySelector('.results-container');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = `
+                <div class="error-message">
+                    <h3>Oops! Something went wrong</h3>
+                    <p>We encountered an error while generating your recommendations. Please try again.</p>
+                    <button onclick="restartQuiz()" class="btn">Start Over</button>
+                </div>
+            `;
+        }
+    }
+}
+
+// Fix the restart quiz function
+function restartQuiz() {
+    currentQuestion = 0;
+    userAnswers = [];
+    document.getElementById('results-section').classList.add('hidden');
+    document.getElementById('welcome-section').classList.remove('hidden');
+    document.getElementById('welcome-section').classList.add('active');
+    
+    // Clear any error messages or results
+    const resultsContainer = document.querySelector('.results-container');
+    resultsContainer.innerHTML = `
+        <div id="recommended-clubs">
+            <h3>Recommended Clubs & Organizations</h3>
+            <div id="clubs-list"></div>
+        </div>
+        <div id="roadmap">
+            <h3>Your 4-Year Roadmap</h3>
+            <div id="roadmap-content"></div>
+        </div>
+    `;
 }
 
 // Generate 4-year roadmap based on answers
 function generateRoadmap() {
     const collegeType = questions[3].options[userAnswers[3][0]];
-    const targetGPA = questions[4].options[userAnswers[4][0]];
+    const careerPath = questions[2].options[userAnswers[2][0]];
     const isIvyLeagueTrack = collegeType === "Ivy League/Top-tier Universities";
-    const isHighAchiever = targetGPA.startsWith("4.0+") || targetGPA.startsWith("3.7-3.99");
+
+    // Determine relevant programs, clubs, and field resources based on career path
+    let relevantSummerPrograms;
+    let relevantClubPaths;
+    let relevantFieldResources;
+    
+    if (careerPath.includes("STEM")) {
+        relevantSummerPrograms = summerPrograms.STEM;
+        relevantClubPaths = clubProgressions.STEM;
+        relevantFieldResources = fieldResources.STEM;
+    } else if (careerPath.includes("Business")) {
+        relevantSummerPrograms = summerPrograms.Business;
+        relevantClubPaths = clubProgressions.Business;
+        relevantFieldResources = fieldResources.Business;
+    } else if (careerPath.includes("Arts")) {
+        relevantSummerPrograms = summerPrograms.Arts;
+        relevantClubPaths = clubProgressions.Arts;
+        relevantFieldResources = fieldResources.Arts;
+    } else if (careerPath.includes("Healthcare")) {
+        relevantSummerPrograms = summerPrograms.Healthcare;
+        relevantClubPaths = clubProgressions.STEM; // Healthcare students often benefit from STEM clubs
+        relevantFieldResources = fieldResources.Healthcare;
+    } else if (careerPath.includes("Technology")) {
+        relevantSummerPrograms = summerPrograms.STEM;
+        relevantClubPaths = clubProgressions.STEM;
+        relevantFieldResources = fieldResources.Technology;
+    } else {
+        // Default resources if no specific match
+        relevantSummerPrograms = summerPrograms.STEM;
+        relevantClubPaths = clubProgressions.Leadership;
+        relevantFieldResources = fieldResources.STEM;
+    }
 
     const roadmap = {
-        "Summer Before Freshman Year": {
-            "Academic Preparation": [
-                "Review algebra and geometry concepts",
-                "Start reading classical literature",
-                "Consider taking a summer enrichment course",
-                isIvyLeagueTrack && "Prepare for honors/advanced placement classes"
-            ].filter(Boolean),
-            "Planning": [
-                "Research high school's available AP/Honors courses",
-                "Plan freshman year course schedule",
-                "Identify potential extracurricular activities",
-                isIvyLeagueTrack && "Research summer programs for following years"
-            ].filter(Boolean),
-            "Resources": [
-                resources.projectIdeas,
-                resources.summerPrograms
-            ]
-        },
         "Freshman Year": {
             "Academic": [
                 "Take challenging core classes",
@@ -508,39 +979,28 @@ function generateRoadmap() {
                 "Start building strong study habits",
                 "Keep detailed records of achievements"
             ],
-            "Extracurricular": [
-                "Join 2-3 clubs that match your interests",
-                "Try out for sports teams if interested",
-                "Start community service",
-                isIvyLeagueTrack && "Begin developing leadership roles",
-                "Document all activities and hours"
-            ].filter(Boolean),
-            "College Prep": [
-                "Meet with guidance counselor to plan 4-year schedule",
-                "Research summer programs and internships",
-                "Start building relationships with teachers",
-                isIvyLeagueTrack && "Consider SAT Subject Test preparation",
-                "Begin exploring college options"
-            ].filter(Boolean)
+            "Club Involvement": [
+                "Join 2-3 clubs aligned with your interests",
+                "Focus on active participation and learning",
+                "Document all activities and achievements",
+                "Attend club meetings regularly and volunteer for committees"
+            ],
+            "Resources": [
+                relevantClubPaths,
+                opportunityResources.volunteer
+            ]
         },
         "Summer After Freshman Year": {
-            "Academic": [
-                "Take an enrichment course at a local college",
-                "Start SAT/ACT prep",
-                isIvyLeagueTrack && "Prepare for upcoming AP courses",
-                "Read extensively from college preparatory lists"
-            ].filter(Boolean),
-            "Activities": [
-                "Volunteer or community service",
-                "Attend academic or sports camps",
-                "Start a personal project",
-                isIvyLeagueTrack && "Consider research opportunities"
-            ].filter(Boolean),
+            "Recommended Activities": [
+                "Attend introductory summer programs",
+                "Start standardized test prep",
+                "Volunteer in your field of interest",
+                "Develop relevant skills through online courses"
+            ],
             "Resources": [
+                relevantSummerPrograms,
                 resources.satPrep,
-                resources.actPrep,
-                resources.projectIdeas,
-                resources.research
+                opportunityResources.volunteer
             ]
         },
         "Sophomore Year": {
@@ -548,117 +1008,81 @@ function generateRoadmap() {
                 isIvyLeagueTrack ? "Take 2-3 AP/Honors classes" : "Take 1-2 AP/Honors classes",
                 "Maintain high GPA",
                 "Take PSAT for practice",
-                "Consider SAT Subject Tests in completed courses",
                 "Start SAT/ACT preparation"
             ],
-            "Extracurricular": [
-                "Take leadership roles in clubs",
-                "Continue community service",
-                "Participate in competitions",
-                isIvyLeagueTrack && "Start unique personal projects",
-                "Document achievements and hours"
-            ].filter(Boolean),
-            "College Prep": [
-                "Research colleges and admission requirements",
-                "Attend college fairs",
-                "Plan summer activities",
-                "Update college planning portfolio",
-                isIvyLeagueTrack && "Research summer programs at top universities"
-            ].filter(Boolean)
+            "Club Leadership": [
+                "Take on committee roles in your main clubs",
+                "Start leading small projects or initiatives",
+                "Document leadership experiences",
+                "Mentor new club members"
+            ],
+            "Resources": [
+                relevantClubPaths,
+                resources.satPrep,
+                opportunityResources.competitions
+            ]
         },
         "Summer After Sophomore Year": {
-            "Academic": [
-                isIvyLeagueTrack ? "Attend selective summer programs" : "Attend summer programs",
-                "Continue SAT/ACT prep",
-                "Prepare for junior year AP courses",
-                "Consider taking summer college courses"
+            "Recommended Programs": [
+                "Apply to selective summer programs in your field",
+                "Gain relevant work or volunteer experience",
+                "Start a personal project",
+                "Continue test prep"
             ],
-            "Activities": [
-                "Internship or research opportunity",
-                "Leadership programs",
-                "Volunteer work",
-                isIvyLeagueTrack && "Start significant community initiative"
-            ].filter(Boolean)
+            "Resources": [
+                relevantSummerPrograms,
+                relevantFieldResources,
+                opportunityResources.internships
+            ].filter(Boolean) // Filter out any undefined resources
         },
         "Junior Year": {
             "Academic": [
                 isIvyLeagueTrack ? "Take 4-5 AP classes" : "Take 2-3 AP classes",
                 "Take SAT/ACT (multiple times if needed)",
-                "Take SAT Subject Tests",
                 "Maintain excellent grades",
-                "Consider academic competitions"
+                "Consider subject-specific competitions"
             ],
-            "Extracurricular": [
-                "Hold leadership positions",
-                "Focus on significant achievements",
-                "Lead major projects or initiatives",
-                "Continue consistent involvement",
-                isIvyLeagueTrack && "Aim for state/national recognition"
-            ].filter(Boolean),
-            "College Prep": [
-                "Start college essays",
-                "Research scholarships",
-                "Visit colleges",
-                "Prepare college application portfolio",
-                "Meet with college counselor regularly"
+            "Leadership": [
+                "Run for officer positions in your clubs",
+                "Lead major club initiatives or projects",
+                "Organize events or competitions",
+                "Build strong relationships with club advisors"
             ],
             "Resources": [
-                resources.satPrep,
-                resources.actPrep,
-                resources.competitions,
-                resources.essays,
-                resources.scholarships
+                relevantClubPaths,
+                opportunityResources.competitions,
+                resources.essays
             ]
         },
         "Summer After Junior Year": {
-            "Academic": [
-                "Finalize standardized testing",
-                "Work on college essays",
-                isIvyLeagueTrack ? "Selective summer programs/research" : "Summer programs/internships",
-                "Prepare for senior year courses"
+            "Recommended Programs": [
+                "Attend prestigious summer programs in your field",
+                "Secure relevant internships",
+                "Complete significant projects",
+                "Prepare college applications"
+            ],
+            "Resources": [
+                relevantSummerPrograms,
+                relevantFieldResources,
+                resources.essays
+            ].filter(Boolean)
+        },
+        "Senior Year": {
+            "Leadership Legacy": [
+                "Hold top leadership positions in clubs",
+                "Mentor younger students",
+                "Create sustainable club initiatives",
+                "Document achievements for college applications"
             ],
             "College Applications": [
-                "Complete common application",
-                "Finalize college list",
-                "Work on supplemental essays",
-                "Prepare activity resume",
-                "Plan early decision/action strategy"
-            ]
-        },
-        "Senior Year Fall": {
-            "Academic": [
-                "Maintain strong grades (avoid senioritis)",
-                "Complete remaining AP courses",
-                "Finish any remaining SAT Subject Tests",
-                isIvyLeagueTrack && "Consider academic research projects"
-            ].filter(Boolean),
-            "Applications": [
-                "Submit early applications (if applicable)",
+                "Submit early applications if applicable",
                 "Complete regular decision applications",
-                "Request teacher recommendations",
-                "Send test scores and transcripts",
-                "Apply for scholarships"
+                "Apply for scholarships",
+                "Maintain strong grades and involvement"
             ],
-            "Extracurricular": [
-                "Continue leadership roles",
-                "Complete major projects",
-                "Document achievements",
-                "Mentor younger students"
-            ]
-        },
-        "Senior Year Spring": {
-            "Academic": [
-                "Maintain strong grades",
-                "Complete AP exams",
-                "Document any new achievements",
-                "Prepare for college transition"
-            ],
-            "College Planning": [
-                "Review college decisions",
-                "Compare financial aid packages",
-                "Make final college choice",
-                "Apply for additional scholarships",
-                "Plan summer transition activities"
+            "Resources": [
+                resources.essays,
+                resources.scholarships
             ]
         }
     };
@@ -668,24 +1092,54 @@ function generateRoadmap() {
 
 // Display club recommendations
 function displayClubRecommendations(recommendations) {
-    const clubsList = document.getElementById('clubs-list');
-    clubsList.innerHTML = '';
-
-    recommendations.forEach(category => {
-        const categoryElement = document.createElement('div');
-        categoryElement.innerHTML = `
-            <h4>${category}</h4>
-            <div class="clubs-category">
-                ${clubs[category].map(club => `
-                    <div class="club-item">
-                        <a href="${club.url}" target="_blank" class="club-link">${club.name}</a>
-                        <p class="club-description">${club.description}</p>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        clubsList.appendChild(categoryElement);
-    });
+    try {
+        const clubsList = document.getElementById('clubs-list');
+        if (!clubsList) {
+            throw new Error('Clubs list container not found');
+        }
+        
+        let html = '';
+        
+        recommendations.forEach(category => {
+            html += `
+                <div class="clubs-category">
+                    <h4>${category.name || 'Unnamed Category'}</h4>
+            `;
+            
+            if (category.explanation) {
+                html += `<p class="category-explanation">${category.explanation}</p>`;
+            }
+            
+            if (category.clubs && Array.isArray(category.clubs) && category.clubs.length > 0) {
+                category.clubs.forEach(club => {
+                    html += `
+                        <div class="club-item">
+                            <h5>${club.name}</h5>
+                            ${club.description ? `<p class="club-description">${club.description}</p>` : ''}
+                            ${club.url ? `<a href="${club.url}" class="club-link" target="_blank">Learn More</a>` : ''}
+                        </div>
+                    `;
+                });
+            } else if (clubs[category.name]) {
+                clubs[category.name].forEach(club => {
+                    html += `
+                        <div class="club-item">
+                            <h5>${club.name}</h5>
+                            ${club.description ? `<p class="club-description">${club.description}</p>` : ''}
+                            ${club.url ? `<a href="${club.url}" class="club-link" target="_blank">Learn More</a>` : ''}
+                        </div>
+                    `;
+                });
+            }
+            
+            html += '</div>';
+        });
+        
+        clubsList.innerHTML = html;
+    } catch (error) {
+        console.error('Error displaying club recommendations:', error);
+        throw error; // Propagate error to be handled by showResults
+    }
 }
 
 // Display roadmap
@@ -704,16 +1158,52 @@ function displayRoadmap(roadmap) {
                 yearHTML += `
                     <div class="resources-section">
                         <h5>Helpful Resources</h5>
-                        ${items.map(resourceCategory => `
-                            <div class="resource-category">
-                                <h6>${resourceCategory.title}</h6>
-                                <ul class="resource-links">
-                                    ${resourceCategory.links.map(link => `
-                                        <li><a href="${link.url}" target="_blank" class="resource-link">${link.name}</a></li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                        `).join('')}
+                        ${items.filter(Boolean).map(resourceCategory => {
+                            if (!resourceCategory) return '';
+                            if (resourceCategory.paths) {
+                                // Display club progression paths
+                                return `
+                                    <div class="resource-category">
+                                        <h6>${resourceCategory.title}</h6>
+                                        ${resourceCategory.paths.map(path => `
+                                            <div class="club-progression">
+                                                <h7>${path.club}</h7>
+                                                <ul class="progression-list">
+                                                    ${path.progression
+                                                        .filter(prog => prog.year === year.split(' ')[0])
+                                                        .map(prog => `
+                                                            <li class="progression-item">
+                                                                <span class="progression-goal">${prog.goal}</span>
+                                                            </li>
+                                                        `).join('')}
+                                                </ul>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `;
+                            } else if (resourceCategory.links) {
+                                // Display regular resources
+                                return `
+                                    <div class="resource-category">
+                                        <h6>${resourceCategory.title}</h6>
+                                        <ul class="resource-links">
+                                            ${resourceCategory.links.map(link => `
+                                                <li>
+                                                    <a href="${link.url}" target="_blank" class="resource-link">${link.name}</a>
+                                                    ${link.description ? `
+                                                        <p class="resource-description">
+                                                            ${link.description}
+                                                            ${link.yearRecommended ? `<br><strong>Best for:</strong> ${link.yearRecommended}` : ''}
+                                                        </p>
+                                                    ` : ''}
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                `;
+                            }
+                            return '';
+                        }).join('')}
                     </div>
                 `;
             } else {
@@ -733,11 +1223,179 @@ function displayRoadmap(roadmap) {
     });
 }
 
-// Restart quiz
-function restartQuiz() {
-    currentQuestion = 0;
-    userAnswers = [];
-    document.getElementById('results-section').classList.add('hidden');
-    document.getElementById('welcome-section').classList.remove('hidden');
-    document.getElementById('welcome-section').classList.add('active');
-} 
+// Function to download PDF
+async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set font
+    doc.setFont("helvetica");
+    
+    // Draw decorative header background
+    doc.setFillColor(52, 152, 219, 0.1); // Light blue
+    doc.rect(0, 0, 220, 40, "F");
+    
+    // Add title with blue color
+    doc.setFontSize(24);
+    doc.setTextColor(41, 128, 185); // Darker blue
+    doc.text("Your High School Roadmap", 20, 20);
+    
+    // Add subtitle with current date
+    doc.setFontSize(12);
+    doc.setTextColor(100);
+    const date = new Date().toLocaleDateString();
+    doc.text(`Generated on ${date}`, 20, 30);
+    
+    // Draw a road graphic
+    function drawRoad(y) {
+        // Road base
+        doc.setFillColor(189, 195, 199); // Gray
+        doc.rect(30, y, 150, 4, "F");
+        
+        // Road markings
+        doc.setFillColor(255, 255, 255); // White
+        for (let x = 30; x < 180; x += 10) {
+            doc.rect(x, y + 1.5, 5, 1, "F");
+        }
+        
+        // Draw small circles at start and end
+        doc.setFillColor(46, 204, 113); // Green
+        doc.circle(30, y + 2, 3, "F"); // Start circle
+        doc.setFillColor(231, 76, 60); // Red
+        doc.circle(180, y + 2, 3, "F"); // End circle
+    }
+    
+    // Draw initial road
+    drawRoad(35);
+    
+    // Add recommended clubs section
+    doc.setFontSize(16);
+    doc.setTextColor(41, 128, 185); // Blue
+    doc.text("Recommended Clubs & Organizations", 20, 50);
+    
+    // Get recommended clubs
+    const recommendations = await generateRecommendations();
+    let yPos = 60;
+    
+    recommendations.forEach(category => {
+        doc.setFontSize(14);
+        doc.setTextColor(52, 73, 94); // Dark gray-blue
+        doc.text(category.name || category, 25, yPos);
+        yPos += 7;
+        
+        if (category.clubs) {
+            category.clubs.forEach(club => {
+                doc.setFontSize(12);
+                doc.setTextColor(44, 62, 80); // Darker blue-gray
+                doc.text(`• ${club.name}`, 30, yPos);
+                yPos += 5;
+                
+                // Add description in smaller, gray text
+                doc.setFontSize(10);
+                doc.setTextColor(127, 140, 141); // Gray
+                const descriptionLines = doc.splitTextToSize(club.description, 150);
+                descriptionLines.forEach(line => {
+                    doc.text(line, 35, yPos);
+                    yPos += 4;
+                });
+                yPos += 2;
+            });
+        } else if (clubs[category]) {
+            clubs[category].forEach(club => {
+                doc.setFontSize(12);
+                doc.setTextColor(44, 62, 80); // Darker blue-gray
+                doc.text(`• ${club.name}`, 30, yPos);
+                yPos += 5;
+                
+                // Add description in smaller, gray text
+                doc.setFontSize(10);
+                doc.setTextColor(127, 140, 141); // Gray
+                const descriptionLines = doc.splitTextToSize(club.description, 150);
+                descriptionLines.forEach(line => {
+                    doc.text(line, 35, yPos);
+                    yPos += 4;
+                });
+                yPos += 2;
+            });
+        }
+        
+        // Add explanation if available
+        if (category.explanation) {
+            doc.setFontSize(10);
+            doc.setTextColor(52, 152, 219); // Blue
+            const explanationLines = doc.splitTextToSize(category.explanation, 150);
+            explanationLines.forEach(line => {
+                doc.text(line, 30, yPos);
+                yPos += 4;
+            });
+        }
+        
+        yPos += 5;
+    });
+    
+    // Add roadmap section with new page and road graphic
+    doc.addPage();
+    drawRoad(35);
+    yPos = 50;
+    
+    doc.setFontSize(16);
+    doc.setTextColor(41, 128, 185); // Blue
+    doc.text("4-Year Roadmap", 20, yPos);
+    yPos += 10;
+    
+    // Get roadmap data
+    const roadmap = generateRoadmap();
+    
+    // Add each year's information
+    Object.entries(roadmap).forEach(([year, categories]) => {
+        // Add new page if needed
+        if (yPos > 250) {
+            doc.addPage();
+            drawRoad(35);
+            yPos = 50;
+        }
+        
+        // Year heading with custom color
+        doc.setFontSize(14);
+        doc.setTextColor(230, 126, 34); // Orange
+        doc.text(year, 20, yPos);
+        yPos += 7;
+        
+        Object.entries(categories).forEach(([category, items]) => {
+            if (category !== "Resources") {
+                doc.setFontSize(12);
+                doc.setTextColor(52, 73, 94); // Dark gray-blue
+                doc.text(category, 25, yPos);
+                yPos += 5;
+                
+                if (Array.isArray(items)) {
+                    items.forEach(item => {
+                        const lines = doc.splitTextToSize(`• ${item}`, 170);
+                        lines.forEach(line => {
+                            doc.setFontSize(10);
+                            doc.setTextColor(44, 62, 80); // Dark blue-gray
+                            doc.text(line, 30, yPos);
+                            yPos += 4;
+                        });
+                    });
+                    yPos += 3;
+                }
+            }
+        });
+        yPos += 7;
+    });
+    
+    // Add decorative footer
+    doc.setFillColor(52, 152, 219, 0.1); // Light blue
+    doc.rect(0, 270, 220, 30, "F");
+    
+    // Add footer text
+    doc.setFontSize(10);
+    doc.setTextColor(41, 128, 185); // Blue
+    doc.text("Generated by High School Path Finder", 20, 285);
+    doc.setTextColor(127, 140, 141); // Gray
+    doc.text("Your guide to academic success!", 20, 290);
+    
+    // Save the PDF
+    doc.save("high-school-roadmap.pdf");
+}
