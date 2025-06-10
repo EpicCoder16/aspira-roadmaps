@@ -25,9 +25,35 @@ cd highschoolquiz
    - Get an API key from [OpenRouter](https://openrouter.ai/)
    - Replace the placeholder in `config.js` with your API key
 
-3. Serve the application:
-   - Use a local server (e.g., Python's built-in server or Live Server in VS Code)
-   - Open `index.html` in your browser
+3. Serve the application (choose one method):
+   
+   Using Python (recommended):
+   ```bash
+   # If you have Python 3:
+   python3 -m http.server 8000
+   
+   # If you have Python 2:
+   python -m SimpleHTTPServer 8000
+   ```
+   
+   Using VS Code:
+   - Install the "Live Server" extension
+   - Right-click on `index.html`
+   - Select "Open with Live Server"
+   
+   Using Node.js:
+   ```bash
+   # Install a simple server globally
+   npm install -g http-server
+   
+   # Run the server
+   http-server
+   ```
+
+4. Access the application:
+   - Open your browser
+   - Go to `http://localhost:8000` (or the URL provided by your chosen server)
+   - The application should now work correctly with all features
 
 ## Files to Upload to GitHub
 

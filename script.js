@@ -581,6 +581,14 @@ const clubProgressions = {
     }
 };
 
+// Initialize event listeners when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listeners for buttons
+    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+    document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
+    document.getElementById('restart-quiz-btn').addEventListener('click', restartQuiz);
+});
+
 let currentQuestion = 0;
 let userAnswers = [];
 
