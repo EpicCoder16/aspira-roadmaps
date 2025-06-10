@@ -1,5 +1,14 @@
-// Import configuration
-import config from './config.js';
+// Try to import configuration, use fallback if not available
+let config = {
+    OPENROUTER_API_KEY: null // Will be populated from config.js if available
+};
+
+try {
+    const importedConfig = await import('./config.js');
+    config = importedConfig.default;
+} catch (error) {
+    console.log('Using fallback recommendation system');
+}
 
 // Quiz questions and options
 const questions = [
@@ -697,8 +706,14 @@ function updateProgress() {
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
 }
 
-// Update the getAIRecommendations function
+// Update the getAIRecommendations function to handle missing API key
 async function getAIRecommendations(userResponses) {
+    // If no API key is available, use basic recommendations
+    if (!config.OPENROUTER_API_KEY) {
+        console.log('No API key available, using basic recommendations');
+        return null;
+    }
+
     try {
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',

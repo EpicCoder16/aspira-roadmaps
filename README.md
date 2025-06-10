@@ -133,3 +133,25 @@ MIT License - Feel free to use and modify for your needs.
 3. Commit your changes
 4. Push to the branch
 5. Create a new Pull Request 
+
+## Deployment
+
+### Local Development
+For local development with AI-powered recommendations:
+1. Follow the setup instructions above
+2. Make sure to create `config.js` with your OpenRouter API key
+3. Use a local server to test all features
+
+### GitHub Pages Deployment
+The application can run on GitHub Pages with basic recommendations (no API key required):
+1. Push your code to GitHub (excluding `config.js`)
+2. Go to repository Settings > Pages
+3. Select the main branch as the source
+4. Your site will be available at `https://[username].github.io/[repository-name]`
+
+Note: When deployed on GitHub Pages, the application will use a basic recommendation system instead of AI-powered recommendations. This is for security reasons, as we cannot include API keys in public repositories.
+
+To use AI-powered recommendations:
+- Clone the repository locally
+- Set up `config.js` with your API key
+- Run the application on a local server 
