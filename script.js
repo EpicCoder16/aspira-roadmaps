@@ -728,6 +728,8 @@ Please provide recommendations in this exact JSON format:
         });
 
         const data = await response.json();
+        console.log("Full OpenRouter response:", data);
+
 
         if (!data || !data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
             console.error('Invalid response format from AI:', data);
