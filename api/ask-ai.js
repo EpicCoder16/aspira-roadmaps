@@ -14,7 +14,7 @@ export const config = {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistral:instruct",
+        model: "mistralai/mistral-7b-instruct:free",
         messages: [
           { role: "user", content: prompt }
         ]
