@@ -146,6 +146,17 @@ window.markMilestone = async function(idx, status) {
   const milestones = doc.data().milestones || [];
   milestones[idx].status = status;
   if (status === 'unsuccessful') {
+    // Show loading message while generating alternative
+    const milestoneCards = document.querySelectorAll('.milestone-card');
+    if (milestoneCards[idx]) {
+      let altSpan = milestoneCards[idx].querySelector('.alt-text');
+      if (!altSpan) {
+        altSpan = document.createElement('span');
+        altSpan.className = 'alt-text';
+        milestoneCards[idx].appendChild(altSpan);
+      }
+      altSpan.textContent = 'Creating custom alternatives...';
+    }
     milestones[idx].alternative = await generateAlternative(milestones[idx].name);
   } else {
     milestones[idx].alternative = '';
@@ -172,7 +183,7 @@ function renderTracker(milestones) {
 async function generateAlternative(milestoneName) {
   // Try OpenRouter AI first
   try {
-    const prompt = `A student was unable to complete the following high school milestone: "${milestoneName}". Suggest a realistic, actionable alternative or workaround that would still help them stand out for college admissions. Be specific and practical.`;
+    const prompt = `You are an expert high school counselor. A student was unable to complete the following milestone: "${milestoneName}". In 100-120 words, speak directly to the student (use 'you') and suggest a realistic, actionable alternative or workaround that would still help them stand out for college admissions. Be specific and practical. Do not refer to 'the student' or 'they'; use 'you' throughout.`;
     const response = await fetch('/api/ask-ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
