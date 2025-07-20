@@ -183,7 +183,7 @@ function renderTracker(milestones) {
 async function generateAlternative(milestoneName) {
   // Try OpenRouter AI first
   try {
-    const prompt = `You are an expert high school counselor. A student was unable to complete the following milestone: "${milestoneName}". In 100-120 words, speak directly to the student (use 'you') and suggest a realistic, actionable alternative or workaround that would still help them stand out for college admissions. Be specific and practical. Do not refer to 'the student' or 'they'; use 'you' throughout.`;
+    const prompt = `You are an expert high school counselor. A student was unable to complete the following milestone: "${milestoneName}". In 50-65 words, speak directly to the student (use 'you') and suggest a realistic, actionable alternative or workaround that would still help them stand out for college admissions. Be specific and practical. Do not refer to 'the student' or 'they'; use 'you' throughout.`;
     const response = await fetch('/api/ask-ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
