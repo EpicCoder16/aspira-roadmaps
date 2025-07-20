@@ -168,8 +168,56 @@ function renderTracker(milestones) {
   `;
 }
 
-// Mock AI alternative generator
+// Improved alternative generator with OpenRouter AI integration
 async function generateAlternative(milestoneName) {
-  // Replace with real AI call if needed
-  return "Try a different approach for " + milestoneName;
+  // Try OpenRouter AI first
+  try {
+    const prompt = `A student was unable to complete the following high school milestone: "${milestoneName}". Suggest a realistic, actionable alternative or workaround that would still help them stand out for college admissions. Be specific and practical.`;
+    const response = await fetch('/api/ask-ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await response.json();
+    // Try to extract a direct suggestion from the AI response
+    let suggestion = '';
+    if (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+      suggestion = data.choices[0].message.content.trim();
+    }
+    if (suggestion) {
+      // Remove any leading 'Alternative:' or similar
+      return suggestion.replace(/^Alternative\s*[:\-]?\s*/i, '');
+    }
+  } catch (e) {
+    // If API fails, fall back to pattern matching
+    console.error('AI alternative fetch failed:', e);
+  }
+  // Fallback pattern-matching logic
+  const lower = milestoneName.toLowerCase();
+  if (lower.includes('join 2-3 clubs')) {
+    return "Start your own club or organization, or join a community/nonprofit group outside of school.";
+  }
+  if (lower.includes('leadership') || lower.includes('officer position')) {
+    return "Seek leadership roles in community organizations, online groups, or start a project where you can demonstrate leadership skills.";
+  }
+  if (lower.includes('gpa') || lower.includes('grades')) {
+    return "Focus on improving study habits, seek tutoring, or take online courses to boost your academic record.";
+  }
+  if (lower.includes('volunteer') || lower.includes('community service')) {
+    return "Look for virtual volunteering, start your own service project, or help a local nonprofit.";
+  }
+  if (lower.includes('summer program')) {
+    return "Pursue online summer programs, internships, or independent research projects if formal programs are unavailable.";
+  }
+  if (lower.includes('standardized test')) {
+    return "Try alternative standardized tests, or focus on strengthening other parts of your application (projects, essays, etc.).";
+  }
+  if (lower.includes('club meetings')) {
+    return "Engage with clubs virtually, participate in online forums, or collaborate on group projects remotely.";
+  }
+  if (lower.includes('personal project')) {
+    return "Team up with friends for a group project, or contribute to open-source/community initiatives.";
+  }
+  // Default fallback
+  return "Try a different approach or seek opportunities outside of school for: " + milestoneName;
 }
