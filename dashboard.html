@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aspira Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBYiWriDFJlazsbo9l-uFOUmA2Sg6UFRZA",
+        authDomain: "aspira-a8fde.firebaseapp.com",
+        projectId: "aspira-a8fde",
+        storageBucket: "aspira-a8fde.firebasestorage.app",
+        messagingSenderId: "103654864027",
+        appId: "1:103654864027:web:140e3215a307acfb90823e",
+        measurementId: "G-PRJ71MQZ78"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f7f9fb;
+        color: #222;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        padding: 40px 40px;
+    }
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+    }
+    .logout-btn {
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 18px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    h2 {
+        font-weight: 600;
+        color: #2d3a4b;
+        margin: 0;
+    }
+    #user-info {
+        margin-bottom: 18px;
+        font-size: 1.1em;
+        color: #555;
+    }
+    .milestone-card {
+        background: #f0f4fa;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .milestone-card select {
+        border-radius: 6px;
+        padding: 4px 8px;
+        border: 1px solid #bfc9d9;
+        background: #fff;
+        font-family: inherit;
+    }
+    .alt-text {
+        color: #e67e22;
+        font-size: 0.98em;
+        margin-left: 12px;
+    }
+    #tracker {
+        margin-top: 32px;
+        background: #eaf1fb;
+        border-radius: 10px;
+        padding: 18px 20px;
+        font-size: 1.1em;
+        color: #2d3a4b;
+    }
+    /* ...existing styles... */
+    .tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    }
+    .tab-btn {
+    background: #eaf1fb;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 10px 22px;
+    font-weight: 500;
+    color: #2d3a4b;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+    background: #4f8cff;
+    color: #fff;
+    }
+    .year-section {
+    animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+    }
+    h4 {
+    margin-top: 18px;
+    color: #4f8cff;
+    font-weight: 600;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-bar">
+                <div id="user-email" class="user-email"></div>
+                <div class="header-actions">
+                    <button onclick="logout()" class="btn logout-btn">Logout</button>
+                    <button id="dashboard-btn" onclick="window.location.href='dashboard.html'" class="btn dashboard-btn">Dashboard</button>
+                </div>
+            </div>
+            <h2>Dashboard</h2>
+        </header>
+        <main>
+            <div id="user-info"></div>
+            <div id="roadmap-dashboard"></div>
+            <div id="tracker"></div>
+        </main>
+    </div>
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-brand">Aspira <span style="font-size:1.1em;">🚀</span></div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <span>|</span>
+                <a href="/privacy.html">Privacy Policy</a>
+                <span>|</span>
+                <a href="/tos.html">Terms of Service</a>
+            </div>
+            <div class="footer-copy">&copy; 2025 Aspira. All rights reserved.</div>
+        </div>
+    </footer>
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -112,6 +112,11 @@ const questions = [
     }
 ];
 
+// Add an array of emojis for each question
+const questionEmojis = [
+  '🎯', '⭐', '🚀', '🏆', '📚', '📝', '💡', '🌟', '🔬', '👑'
+];
+
 // Club recommendations based on interests
 const clubs = {
     "STEM": [
@@ -580,6 +585,7 @@ const clubProgressions = {
 
 let currentQuestion = 0;
 let userAnswers = [];
+let latestMilestones = null; // Store milestones after quiz completion
 
 // Initialize the quiz
 function startQuiz() {
@@ -594,7 +600,10 @@ function startQuiz() {
 function showQuestion() {
     const questionData = questions[currentQuestion];
     document.getElementById('question').textContent = questionData.question;
-    
+    const emojiSpan = document.getElementById('question-emoji');
+    if (emojiSpan) {
+      emojiSpan.textContent = questionEmojis[currentQuestion] || '❓';
+    }
     const optionsContainer = document.getElementById('options');
     optionsContainer.innerHTML = '';
     
@@ -690,6 +699,100 @@ function updateProgress() {
         document.getElementById('progress-bar').appendChild(progressText);
     }
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+}
+
+
+// ...existing code...
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.signInWithEmailAndPassword(email, password)
+    .then(async () => {
+      showSection('welcome-section');
+      // Hide auth-section and divider after login
+      const authSection = document.getElementById('auth-section');
+      if (authSection) authSection.style.display = 'none';
+      const authDivider = document.querySelector('.auth-divider');
+      if (authDivider) authDivider.style.display = 'none';
+      // Hide quiz section after login
+      const quizSection = document.getElementById('quiz-section');
+      if (quizSection) quizSection.classList.add('hidden');
+      // If just finished quiz and have milestones, save to Firestore if not already present
+      if (latestMilestones && latestMilestones.length > 0) {
+        const doc = await db.collection('roadmaps').doc(auth.currentUser.uid).get();
+        if (!doc.exists) {
+          saveRoadmapToFirestore(latestMilestones);
+        }
+      }
+    })
+    .catch(e => {
+      document.getElementById('auth-message').innerText = e.message;
+    });
+}
+
+function signup() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(async () => {
+      showSection('welcome-section');
+      // Hide auth-section and divider after signup
+      const authSection = document.getElementById('auth-section');
+      if (authSection) authSection.style.display = 'none';
+      const authDivider = document.querySelector('.auth-divider');
+      if (authDivider) authDivider.style.display = 'none';
+      // Hide quiz section after signup
+      const quizSection = document.getElementById('quiz-section');
+      if (quizSection) quizSection.classList.add('hidden');
+      // If just finished quiz and have milestones, save to Firestore
+      if (latestMilestones && latestMilestones.length > 0) {
+        saveRoadmapToFirestore(latestMilestones);
+      }
+    })
+    .catch(e => {
+      document.getElementById('auth-message').innerText = e.message;
+    });
+}
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    showSection('welcome-section');
+    const userEmailDiv = document.getElementById('user-email');
+    if (userEmailDiv) {
+      userEmailDiv.textContent = user.email;
+      userEmailDiv.style.display = 'block';
+    }
+    const headerActions = document.querySelector('.header-actions');
+    if (headerActions) headerActions.style.display = 'flex';
+    // Hide auth-section and divider if logged in
+    const authSection = document.getElementById('auth-section');
+    if (authSection) authSection.style.display = 'none';
+    const authDivider = document.querySelector('.auth-divider');
+    if (authDivider) authDivider.style.display = 'none';
+    // Hide quiz section if logged in
+    const quizSection = document.getElementById('quiz-section');
+    if (quizSection) quizSection.classList.add('hidden');
+  } else {
+    showSection('auth-section');
+    const userEmailDiv = document.getElementById('user-email');
+    if (userEmailDiv) userEmailDiv.style.display = 'none';
+    const headerActions = document.querySelector('.header-actions');
+    if (headerActions) headerActions.style.display = 'none';
+    // Show auth-section and divider if logged out
+    const authSection = document.getElementById('auth-section');
+    if (authSection) authSection.style.display = '';
+    const authDivider = document.querySelector('.auth-divider');
+    if (authDivider) authDivider.style.display = '';
+  }
+});
+
+function goToDashboard() {
+  window.location.href = 'dashboard.html';
 }
 
 // Add OpenRouter integration
@@ -877,6 +980,24 @@ async function showResults() {
         const recommendations = await generateRecommendations();
         const roadmap = generateRoadmap();
         
+        // Convert roadmap to milestones array
+        const milestones = [];
+        Object.entries(roadmap).forEach(([year, categories]) => {
+        Object.entries(categories).forEach(([category, items]) => {
+            if (Array.isArray(items)) {
+            items.forEach(item => {
+                milestones.push({ name: `${year} - ${category}: ${item}`, status: "", alternative: "" });
+            });
+            }
+        });
+        });
+        latestMilestones = milestones; // Store for later signup
+
+        // Save to Firestore if logged in
+        if (auth.currentUser) {
+            saveRoadmapToFirestore(milestones);
+        }
+
         if (!recommendations || !Array.isArray(recommendations) || recommendations.length === 0) {
             throw new Error('Failed to generate valid recommendations');
         }
@@ -896,6 +1017,22 @@ async function showResults() {
         // Display results
         displayClubRecommendations(recommendations);
         displayRoadmap(roadmap);
+
+        // If not logged in, show a call to action
+        if (!auth.currentUser) {
+            const resultsSection = document.getElementById('results-section');
+            if (resultsSection) {
+                let cta = document.getElementById('save-cta');
+                if (!cta) {
+                    cta = document.createElement('div');
+                    cta.id = 'save-cta';
+                    cta.style.margin = '2rem 0 0 0';
+                    cta.style.textAlign = 'center';
+                    cta.innerHTML = `<div style="background:#eaf1fb;padding:1.2rem 1rem;border-radius:10px;max-width:400px;margin:0 auto 1.5rem auto;font-size:1.1em;color:#2563eb;font-weight:500;box-shadow:0 2px 8px rgba(79,140,255,0.07);">Want to keep your roadmap? <span style='font-weight:600;'>Sign up to save your results!</span></div>`;
+                    resultsSection.insertBefore(cta, resultsSection.firstChild);
+                }
+            }
+        }
         
     } catch (error) {
         console.error('Error showing results:', error);
@@ -1090,6 +1227,13 @@ function generateRoadmap() {
     };
 
     return roadmap;
+}
+
+// Save roadmap to Firestore
+function saveRoadmapToFirestore(milestones) {
+  const user = auth.currentUser;
+  if (!user) return;
+  db.collection('roadmaps').doc(user.uid).set({ milestones });
 }
 
 // Display club recommendations
@@ -1436,4 +1580,8 @@ async function downloadPDF() {
     
     // Save the PDF
     doc.save("aspira-roadmap.pdf");
+}
+
+function logout() {
+  auth.signOut();
 }

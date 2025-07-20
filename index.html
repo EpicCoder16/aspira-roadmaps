@@ -6,6 +6,26 @@
     <title>Aspira - Your High School Path Finder</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- ...existing code... -->
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
+    <script>
+    // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBYiWriDFJlazsbo9l-uFOUmA2Sg6UFRZA",
+            authDomain: "aspira-a8fde.firebaseapp.com",
+            projectId: "aspira-a8fde",
+            storageBucket: "aspira-a8fde.firebasestorage.app",
+            messagingSenderId: "103654864027",
+            appId: "1:103654864027:web:140e3215a307acfb90823e",
+            measurementId: "G-PRJ71MQZ78"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+    <!-- ...existing code... -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- Google tag (gtag.js) -->
@@ -21,12 +41,30 @@
 <body>
     <div class="container">
         <header>
+            <div class="header-bar">
+                <div id="user-email" class="user-email"></div>
+                <div class="header-actions">
+                    <button onclick="logout()" class="btn logout-btn">Logout</button>
+                    <button id="dashboard-btn" onclick="goToDashboard()" class="btn dashboard-btn">Go to Dashboard</button>
+                </div>
+            </div>
             <img src="aspirawidestyle.png" alt="Aspira Logo" class="logo">
             <div class="header-text">
                 <p class="subtitle">Discover your perfect clubs and plan your future!</p>
             </div>
         </header>
+        <!-- ...existing code... -->
+        <div id="auth-section" class="section auth-section">
+            <h2>Login or Sign Up</h2>
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="login()" class="auth-btn primary">Login</button>
+            <button onclick="signup()" class="auth-btn secondary">Sign Up</button>
+            <p id="auth-message"></p>
+        </div>
+        <div class="auth-divider"></div>
 
+        <!-- ...existing code... -->
         <main>
             <div id="welcome-section" class="section active">
                 <h2>Welcome to Your Future Planning Tool!</h2>
@@ -44,7 +82,7 @@
                 <div id="progress-bar">
                     <div id="progress"></div>
                 </div>
-                <h2 id="question"></h2>
+                <h2><span id="question-emoji" style="font-size:1.5em;vertical-align:middle;margin-right:0.3em;"></span><span id="question"></span></h2>
                 <div id="options" class="options-container"></div>
             </div>
 
@@ -83,4 +121,4 @@
     </div>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
