@@ -232,3 +232,7 @@ async function generateAlternative(milestoneName) {
   // Default fallback
   return "Try a different approach or seek opportunities outside of school for: " + milestoneName;
 }
+
+document.querySelector('.scroll-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});

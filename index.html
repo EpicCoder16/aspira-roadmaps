@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aspira - Your High School Path Finder</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <!-- ...existing code... -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore-compat.js"></script>
     <script>
-    // Your Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyBYiWriDFJlazsbo9l-uFOUmA2Sg6UFRZA",
             authDomain: "aspira-a8fde.firebaseapp.com",
@@ -25,100 +31,301 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
     </script>
-    <!-- ...existing code... -->
+    
+    <!-- PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- Google tag (gtag.js) -->
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HG269CSTWK"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-HG269CSTWK');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HG269CSTWK');
     </script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-bar">
-                <div id="user-email" class="user-email"></div>
-                <div class="header-actions">
-                    <button onclick="logout()" class="btn logout-btn">Logout</button>
-                    <button id="dashboard-btn" onclick="goToDashboard()" class="btn dashboard-btn">Go to Dashboard</button>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="aspirawidestyle.png" alt="Aspira Logo" class="nav-logo-img">
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <div class="nav-user" id="nav-user" style="display: none;">
+                    <span id="user-email" class="user-email"></span>
+                    <button onclick="logout()" class="nav-btn logout-btn">Logout</button>
+                    <button onclick="goToDashboard()" class="nav-btn dashboard-btn">Dashboard</button>
+                </div>
+                <div class="nav-auth" id="nav-auth">
+                    <button onclick="showAuthModal()" class="nav-btn primary-btn">Login</button>
                 </div>
             </div>
-            <img src="aspirawidestyle.png" alt="Aspira Logo" class="logo">
-            <div class="header-text">
-                <p class="subtitle">Discover your perfect clubs and plan your future!</p>
-            </div>
-        </header>
-        <!-- ...existing code... -->
-        <div id="auth-section" class="section auth-section">
-            <h2>Login or Sign Up</h2>
-            <input type="email" id="email" placeholder="Email" />
-            <input type="password" id="password" placeholder="Password" />
-            <button onclick="login()" class="auth-btn primary">Login</button>
-            <button onclick="signup()" class="auth-btn secondary">Sign Up</button>
-            <p id="auth-message"></p>
         </div>
-        <div class="auth-divider"></div>
+    </nav>
 
-        <!-- ...existing code... -->
-        <main>
-            <div id="welcome-section" class="section active">
-                <h2>Welcome to Your Future Planning Tool!</h2>
-                <p>This quiz will help you:</p>
-                <ul>
-                    <li>Find clubs and organizations that match your interests</li>
-                    <li>Create a personalized 4-year roadmap</li>
-                    <li>Set goals for college and career preparation</li>
-                </ul>
-                <br>
-                <button onclick="startQuiz()" class="btn">Start Quiz</button>
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-container">
+                <h2>Welcome to Aspira</h2>
+                <p>Login or create an account to save your roadmap</p>
+                <input type="email" id="email" placeholder="Email" />
+                <input type="password" id="password" placeholder="Password" />
+                <button onclick="login()" class="auth-btn primary">Login</button>
+                <button onclick="signup()" class="auth-btn secondary">Sign Up</button>
+                <p id="auth-message"></p>
             </div>
+        </div>
+    </div>
 
-            <div id="quiz-section" class="section hidden">
-                <div id="progress-bar">
-                    <div id="progress"></div>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" data-aos="fade-up">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Plan Your Future with Confidence</h1>
+                    <p class="hero-subtitle">Discover the perfect clubs, create your 4-year roadmap, and track your progress toward college success with AI-powered guidance.</p>
+                    <div class="hero-buttons">
+                        <button onclick="startQuiz()" class="btn primary-btn">Get Started</button>
+                        <button onclick="scrollToFeatures()" class="btn secondary-btn">Explore Features</button>
+                    </div>
                 </div>
-                <h2><span id="question-emoji" style="font-size:1.5em;vertical-align:middle;margin-right:0.3em;"></span><span id="question"></span></h2>
+                <div class="hero-image">
+                    <img src="aspirawidestyle.png" alt="Aspira Platform" class="hero-logo">
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Stats Section -->
+        <section class="stats" data-aos="fade-up">
+            <div class="stats-container">
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-users stat-icon"></i>
+                    <h3>140+</h3>
+                    <p>Active Students</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-eye stat-icon"></i>
+                    <h3>500+</h3>
+                    <p>Roadmaps Created</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-chart-line stat-icon"></i>
+                    <h3>95%</h3>
+                    <p>Success Rate</p>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-star stat-icon"></i>
+                    <h3>4.8/5</h3>
+                    <p>Student Rating</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features" data-aos="fade-up">
+            <div class="features-container">
+                <h2 class="section-title">Why Choose Aspira?</h2>
+                <p class="section-subtitle">Everything you need to plan your high school journey and beyond</p>
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-route feature-icon"></i>
+                        <h3>Personalized Roadmap</h3>
+                        <p>Get a custom 4-year plan tailored to your interests, goals, and college aspirations.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-calendar-alt feature-icon"></i>
+                        <h3>4-Year Planning</h3>
+                        <p>Strategic timeline covering academics, extracurriculars, and college preparation.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-chart-bar feature-icon"></i>
+                        <h3>Goal Tracking</h3>
+                        <p>Monitor your progress and celebrate achievements with our interactive dashboard.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-robot feature-icon"></i>
+                        <h3>Expert AI Guidance</h3>
+                        <p>Receive intelligent recommendations powered by advanced AI technology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works" data-aos="fade-up">
+            <div class="how-it-works-container">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Three simple steps to your personalized roadmap</p>
+                <div class="steps-container">
+                    <div class="step" data-aos="fade-right" data-aos-delay="100">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Take the Quiz</h3>
+                            <p>Answer questions about your interests, goals, and college preferences.</p>
+                        </div>
+                    </div>
+                    <div class="step" data-aos="fade-right" data-aos-delay="200">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Get Your Roadmap</h3>
+                            <p>Receive a personalized 4-year plan with club recommendations and milestones.</p>
+                        </div>
+                    </div>
+                    <div class="step" data-aos="fade-right" data-aos-delay="300">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Track & Succeed</h3>
+                            <p>Monitor your progress and update your achievements in your dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" data-aos="fade-up">
+            <div class="testimonials-container">
+                <h2 class="section-title">What Students Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-content">
+                            <p>"Aspira helped me plan my path to Georgia Tech. The AI recommendations were spot-on!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Rohit S.</h4>
+                            <p>Georgia Tech Student</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-content">
+                            <p>""Finally, a clear roadmap for my business goals. Love the competition suggestions."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Judy M.</h4>
+                            <p>UPenn Wharton Student</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-content">
+                            <p>"The extracurricular planning feature is a game-changer. So organized!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <h4>Neel G.</h4>
+                            <p>UC Berkeley Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta" data-aos="fade-up">
+            <div class="cta-container">
+                <h2>Ready to Plan Your Future?</h2>
+                <p>Join hundreds of students who are already building their path to success</p>
+                <button onclick="startQuiz()" class="btn primary-btn large">Start Planning Now</button>
+            </div>
+        </section>
+
+        <!-- Quiz Section (Hidden by default) -->
+        <section id="quiz-section" class="quiz-section hidden">
+            <div class="quiz-container">
+                <div id="progress-bar" class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+                <h2 class="quiz-question">
+                    <i class="fas fa-question-circle question-icon"></i>
+                    <span id="question"></span>
+                </h2>
                 <div id="options" class="options-container"></div>
             </div>
+        </section>
 
-            <div id="results-section" class="section hidden">
+        <!-- Results Section (Hidden by default) -->
+        <section id="results-section" class="results-section hidden">
+            <div class="results-container">
                 <h2>Your Personalized Results</h2>
                 <div class="button-container">
                     <button onclick="downloadPDF()" class="btn download-btn">Download PDF Roadmap</button>
-                    <button onclick="restartQuiz()" class="btn">Take Quiz Again</button>
+                    <button onclick="restartQuiz()" class="btn secondary-btn">Take Quiz Again</button>
                 </div>
-                <div class="results-container">
-                    <div id="recommended-clubs">
+                <div class="results-content">
+                    <div id="recommended-clubs" class="results-section">
                         <h3>Recommended Clubs & Organizations</h3>
                         <div id="clubs-list"></div>
                     </div>
-                    <div id="roadmap">
+                    <div id="roadmap" class="results-section">
                         <h3>Your 4-Year Roadmap</h3>
                         <div id="roadmap-content"></div>
                     </div>
                 </div>
             </div>
-        </main>
+        </section>
+    </main>
 
-        <footer>
-            <p>Created with ❤️ for ambitious high school students</p>
-              <p style="margin: 0.5rem 0;">
-                © 2025 Aspira. All rights reserved.
-            </p>
-            <p style="margin: 0.5rem 0;">
-                <a href="/index.html" style="margin-right: 1rem; color: #333; text-decoration: none;">Home</a>
-                |
-                <a href="/privacy.html" style="margin: 1rem; color: #333; text-decoration: none;">Privacy Policy</a>
-                |
-                <a href="/tos.html" style="margin-left: 1rem; color: #333; text-decoration: none;">Terms of Service</a>
-            </p>
-        </footer>
-    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="scroll-to-top">
+                        <img src="aspirawidestyle.png" alt="Aspira" class="footer-logo">
+                    </div>
+                    <p>Empowering students to plan their future with confidence.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy.html" target="_blank">Privacy Policy</a>
+                    <a href="tos.html" target="_blank">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aspira. All rights reserved. Made with ❤️ for ambitious students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Smooth scroll function
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Auth modal functions
+        function showAuthModal() {
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('auth-modal');
+            if (event.target === modal) {
+                closeAuthModal();
+            }
+        }
+    </script>
 </body>
 </html>

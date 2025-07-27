@@ -97,24 +97,19 @@ const questions = [
             "1-2 courses",
             "None"
         ],
-        multiple: false
+        multiple: true
     },
     {
-        question: "What are your leadership goals?",
+        question: "What extracurricular activities are you most interested in?",
         options: [
-            "Found/Lead Multiple Organizations",
-            "Hold Officer Positions in Clubs",
-            "Captain of Sports Team",
-            "Class Representative",
-            "Prefer to Participate Without Leading"
+            "Academic Competitions",
+            "Community Service",
+            "Sports and Athletics",
+            "Arts and Performance",
+            "Leadership and Student Government"
         ],
         multiple: true
     }
-];
-
-// Add an array of emojis for each question
-const questionEmojis = [
-  '🎯', '⭐', '🚀', '🏆', '📚', '📝', '💡', '🌟', '🔬', '👑'
 ];
 
 // Club recommendations based on interests
@@ -589,10 +584,11 @@ let latestMilestones = null; // Store milestones after quiz completion
 
 // Initialize the quiz
 function startQuiz() {
-    document.getElementById('welcome-section').classList.remove('active');
-    document.getElementById('welcome-section').classList.add('hidden');
+    // Hide all main sections and show quiz
+    document.querySelectorAll('main > section').forEach(section => {
+        section.classList.add('hidden');
+    });
     document.getElementById('quiz-section').classList.remove('hidden');
-    document.getElementById('quiz-section').classList.add('active');
     showQuestion();
 }
 
@@ -600,10 +596,7 @@ function startQuiz() {
 function showQuestion() {
     const questionData = questions[currentQuestion];
     document.getElementById('question').textContent = questionData.question;
-    const emojiSpan = document.getElementById('question-emoji');
-    if (emojiSpan) {
-      emojiSpan.textContent = questionEmojis[currentQuestion] || '❓';
-    }
+    
     const optionsContainer = document.getElementById('options');
     optionsContainer.innerHTML = '';
     
@@ -627,7 +620,7 @@ function showQuestion() {
         nextButtonContainer.className = 'next-button-container';
         
         const nextButton = document.createElement('button');
-        nextButton.className = 'btn';
+        nextButton.className = 'btn primary-btn';
         nextButton.textContent = 'Next';
         nextButton.onclick = () => nextQuestion();
         
@@ -685,20 +678,10 @@ function nextQuestion() {
     }
 }
 
-// Update progress bar with text
+// Update progress bar
 function updateProgress() {
     const progress = ((currentQuestion + 1) / questions.length) * 100;
-    const progressBar = document.getElementById('progress');
-    progressBar.style.width = `${progress}%`;
-    
-    // Update or create progress text
-    let progressText = document.querySelector('.progress-text');
-    if (!progressText) {
-        progressText = document.createElement('div');
-        progressText.className = 'progress-text';
-        document.getElementById('progress-bar').appendChild(progressText);
-    }
-    progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+    document.getElementById('progress').style.width = progress + '%';
 }
 
 
@@ -713,15 +696,8 @@ function login() {
   const password = document.getElementById('password').value;
   auth.signInWithEmailAndPassword(email, password)
     .then(async () => {
-      showSection('welcome-section');
-      // Hide auth-section and divider after login
-      const authSection = document.getElementById('auth-section');
-      if (authSection) authSection.style.display = 'none';
-      const authDivider = document.querySelector('.auth-divider');
-      if (authDivider) authDivider.style.display = 'none';
-      // Hide quiz section after login
-      const quizSection = document.getElementById('quiz-section');
-      if (quizSection) quizSection.classList.add('hidden');
+      closeAuthModal();
+      updateNavigationForUser();
       // If just finished quiz and have milestones, save to Firestore if not already present
       if (latestMilestones && latestMilestones.length > 0) {
         const doc = await db.collection('roadmaps').doc(auth.currentUser.uid).get();
@@ -740,15 +716,8 @@ function signup() {
   const password = document.getElementById('password').value;
   auth.createUserWithEmailAndPassword(email, password)
     .then(async () => {
-      showSection('welcome-section');
-      // Hide auth-section and divider after signup
-      const authSection = document.getElementById('auth-section');
-      if (authSection) authSection.style.display = 'none';
-      const authDivider = document.querySelector('.auth-divider');
-      if (authDivider) authDivider.style.display = 'none';
-      // Hide quiz section after signup
-      const quizSection = document.getElementById('quiz-section');
-      if (quizSection) quizSection.classList.add('hidden');
+      closeAuthModal();
+      updateNavigationForUser();
       // If just finished quiz and have milestones, save to Firestore
       if (latestMilestones && latestMilestones.length > 0) {
         saveRoadmapToFirestore(latestMilestones);
@@ -759,35 +728,33 @@ function signup() {
     });
 }
 
+function updateNavigationForUser() {
+  const userEmailDiv = document.getElementById('user-email');
+  const navUser = document.getElementById('nav-user');
+  const navAuth = document.getElementById('nav-auth');
+  
+  if (userEmailDiv && navUser && navAuth) {
+    userEmailDiv.textContent = auth.currentUser.email;
+    navUser.style.display = 'flex';
+    navAuth.style.display = 'none';
+  }
+}
+
+function updateNavigationForGuest() {
+  const navUser = document.getElementById('nav-user');
+  const navAuth = document.getElementById('nav-auth');
+  
+  if (navUser && navAuth) {
+    navUser.style.display = 'none';
+    navAuth.style.display = 'flex';
+  }
+}
+
 auth.onAuthStateChanged(user => {
   if (user) {
-    showSection('welcome-section');
-    const userEmailDiv = document.getElementById('user-email');
-    if (userEmailDiv) {
-      userEmailDiv.textContent = user.email;
-      userEmailDiv.style.display = 'block';
-    }
-    const headerActions = document.querySelector('.header-actions');
-    if (headerActions) headerActions.style.display = 'flex';
-    // Hide auth-section and divider if logged in
-    const authSection = document.getElementById('auth-section');
-    if (authSection) authSection.style.display = 'none';
-    const authDivider = document.querySelector('.auth-divider');
-    if (authDivider) authDivider.style.display = 'none';
-    // Hide quiz section if logged in
-    const quizSection = document.getElementById('quiz-section');
-    if (quizSection) quizSection.classList.add('hidden');
+    updateNavigationForUser();
   } else {
-    showSection('auth-section');
-    const userEmailDiv = document.getElementById('user-email');
-    if (userEmailDiv) userEmailDiv.style.display = 'none';
-    const headerActions = document.querySelector('.header-actions');
-    if (headerActions) headerActions.style.display = 'none';
-    // Show auth-section and divider if logged out
-    const authSection = document.getElementById('auth-section');
-    if (authSection) authSection.style.display = '';
-    const authDivider = document.querySelector('.auth-divider');
-    if (authDivider) authDivider.style.display = '';
+    updateNavigationForGuest();
   }
 });
 
@@ -1004,6 +971,7 @@ async function showResults() {
         
         // Initialize the results container with required structure
         resultsContainer.innerHTML = `
+            <button onclick="downloadPDF()" class="btn download-btn">Download PDF Roadmap</button>
             <div id="recommended-clubs">
                 <h3>Recommended Clubs & Organizations</h3>
                 <div id="clubs-list"></div>
@@ -1028,7 +996,7 @@ async function showResults() {
                     cta.id = 'save-cta';
                     cta.style.margin = '2rem 0 0 0';
                     cta.style.textAlign = 'center';
-                    cta.innerHTML = `<div style="background:#eaf1fb;padding:1.2rem 1rem;border-radius:10px;max-width:400px;margin:0 auto 1.5rem auto;font-size:1.1em;color:#2563eb;font-weight:500;box-shadow:0 2px 8px rgba(79,140,255,0.07);">Want to keep your roadmap? <span style='font-weight:600;'>Sign up to save your results!</span></div>`;
+                    cta.innerHTML = `<div style="background:var(--lighter-blue);padding:1.2rem 1rem;border-radius:10px;max-width:400px;margin:0 auto 1.5rem auto;font-size:1.1em;color:var(--primary-blue);font-weight:500;box-shadow:0 2px 8px rgba(37,99,235,0.1);">Want to keep your roadmap? <span style='font-weight:600;'>Sign up to save your results!</span></div>`;
                     resultsSection.insertBefore(cta, resultsSection.firstChild);
                 }
             }
@@ -1042,7 +1010,7 @@ async function showResults() {
                 <div class="error-message">
                     <h3>Oops! Something went wrong</h3>
                     <p>We encountered an error while generating your recommendations. Please try again.</p>
-                    <button onclick="restartQuiz()" class="btn">Start Over</button>
+                    <button onclick="restartQuiz()" class="btn primary-btn">Start Over</button>
                 </div>
             `;
         }
@@ -1053,22 +1021,31 @@ async function showResults() {
 function restartQuiz() {
     currentQuestion = 0;
     userAnswers = [];
+    
+    // Hide results and show main page
     document.getElementById('results-section').classList.add('hidden');
-    document.getElementById('welcome-section').classList.remove('hidden');
-    document.getElementById('welcome-section').classList.add('active');
+    
+    // Show all main sections again
+    document.querySelectorAll('main > section').forEach(section => {
+        if (section.id !== 'quiz-section' && section.id !== 'results-section') {
+            section.classList.remove('hidden');
+        }
+    });
     
     // Clear any error messages or results
     const resultsContainer = document.querySelector('.results-container');
-    resultsContainer.innerHTML = `
-        <div id="recommended-clubs">
-            <h3>Recommended Clubs & Organizations</h3>
-            <div id="clubs-list"></div>
-        </div>
-        <div id="roadmap">
-            <h3>Your 4-Year Roadmap</h3>
-            <div id="roadmap-content"></div>
-        </div>
-    `;
+    if (resultsContainer) {
+        resultsContainer.innerHTML = `
+            <div id="recommended-clubs">
+                <h3>Recommended Clubs & Organizations</h3>
+                <div id="clubs-list"></div>
+            </div>
+            <div id="roadmap">
+                <h3>Your 4-Year Roadmap</h3>
+                <div id="roadmap-content"></div>
+            </div>
+        `;
+    }
 }
 
 // Generate 4-year roadmap based on answers
@@ -1583,5 +1560,13 @@ async function downloadPDF() {
 }
 
 function logout() {
-  auth.signOut();
+  auth.signOut().then(() => {
+    updateNavigationForGuest();
+    // Clear any stored milestones
+    latestMilestones = null;
+  });
 }
+
+document.querySelector('.scroll-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
