@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
@@ -31,20 +33,21 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
     </script>
-    
+
     <!-- PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HG269CSTWK"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-HG269CSTWK');
     </script>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -97,9 +100,11 @@
             <div class="pantheon-hero-inner">
                 <p class="eyebrow">Personalized. Strategic. Clear.</p>
                 <h1 class="pantheon-title">Your High School Path, <em>Clearly Mapped</em></h1>
-                <p class="pantheon-subtitle">Build a personalized four-year roadmap for clubs, courses, competitions, and college goals with AI-powered guidance.</p>
+                <p class="pantheon-subtitle">Build a personalized four-year roadmap for clubs, courses, competitions,
+                    and college goals with AI-powered guidance.</p>
                 <div class="institution-block" id="partners">
-                    <div class="institution-label"><span></span>Guidance across every part of your journey<span></span></div>
+                    <div class="institution-label"><span></span>Guidance across every part of your journey<span></span>
+                    </div>
                     <div class="institution-logo-mask" aria-label="Aspira planning areas">
                         <div class="institution-logos">
                             <strong class="harvard">Courses<br><small>Planning</small></strong>
@@ -138,9 +143,9 @@
                     </video>
                 </div>
                 <div class="metric-row" aria-label="Aspira outcomes">
-                    <div><strong>140+</strong><span>Active Students</span></div>
-                    <div><strong>200+</strong><span>Roadmaps Created</span></div>
-                    <div><strong>570+</strong><span>Views</span></div>
+                    <div><strong>200+</strong><span>Active Students</span></div>
+                    <div><strong>240+</strong><span>Roadmaps Created</span></div>
+                    <div><strong>650+</strong><span>Views</span></div>
                     <div><strong>4.8/5</strong><span>Student Rating</span></div>
                 </div>
             </div>
@@ -152,10 +157,18 @@
             <div class="partnering-container">
                 <h2>Planning with Aspira</h2>
                 <div class="faq-list">
-                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Aspira asks about your interests, strengths, college goals, and activities, then turns those answers into a practical four-year plan.">How does Aspira create my roadmap?<span>+</span></button>
-                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="The roadmap covers course planning, clubs, competitions, summer opportunities, leadership milestones, and college preparation timing.">What is included in a roadmap?<span>+</span></button>
-                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Yes. You can revisit the quiz and update your plan as your goals, interests, and achievements change.">Can I update my plan later?<span>+</span></button>
-                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Aspira is built for ambitious high school students who want a clearer path through academics, extracurriculars, and college preparation.">Who is Aspira for?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)"
+                        data-answer="Aspira asks about your interests, strengths, college goals, and activities, then turns those answers into a practical four-year plan.">How
+                        does Aspira create my roadmap?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)"
+                        data-answer="The roadmap covers course planning, clubs, competitions, summer opportunities, leadership milestones, and college preparation timing.">What
+                        is included in a roadmap?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)"
+                        data-answer="Yes. You can revisit the quiz and update your plan as your goals, interests, and achievements change.">Can
+                        I update my plan later?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)"
+                        data-answer="Aspira is built for ambitious high school students who want a clearer path through academics, extracurriculars, and college preparation.">Who
+                        is Aspira for?<span>+</span></button>
                 </div>
             </div>
         </section>
@@ -250,8 +263,8 @@
 
         // Smooth scroll function
         function scrollToFeatures() {
-            document.getElementById('programs').scrollIntoView({ 
-                behavior: 'smooth' 
+            document.getElementById('programs').scrollIntoView({
+                behavior: 'smooth'
             });
         }
 
@@ -265,7 +278,7 @@
         }
 
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('auth-modal');
             if (event.target === modal) {
                 closeAuthModal();
@@ -289,4 +302,5 @@
         }
     </script>
 </body>
+
 </html>
