@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aspira Dashboard</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -26,149 +27,59 @@
       const db = firebase.firestore();
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: #f7f9fb;
-        color: #222;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 1200px;
-        margin: 40px auto;
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        padding: 40px 40px;
-    }
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 32px;
-    }
-    .logout-btn {
-        background: #e74c3c;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 18px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-    h2 {
-        font-weight: 600;
-        color: #2d3a4b;
-        margin: 0;
-    }
-    #user-info {
-        margin-bottom: 18px;
-        font-size: 1.1em;
-        color: #555;
-    }
-    .milestone-card {
-        background: #f0f4fa;
-        border-radius: 10px;
-        padding: 16px 18px;
-        margin-bottom: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-    }
-    .milestone-card select {
-        border-radius: 6px;
-        padding: 4px 8px;
-        border: 1px solid #bfc9d9;
-        background: #fff;
-        font-family: inherit;
-    }
-    .alt-text {
-        color: #e67e22;
-        font-size: 0.98em;
-        margin-left: 12px;
-    }
-    #tracker {
-        margin-top: 32px;
-        background: #eaf1fb;
-        border-radius: 10px;
-        padding: 18px 20px;
-        font-size: 1.1em;
-        color: #2d3a4b;
-    }
-    /* ...existing styles... */
-    .tabs {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    }
-    .tab-btn {
-    background: #eaf1fb;
-    border: none;
-    border-radius: 8px 8px 0 0;
-    padding: 10px 22px;
-    font-weight: 500;
-    color: #2d3a4b;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background 0.2s;
-    }
-    .tab-btn.active, .tab-btn:hover {
-    background: #4f8cff;
-    color: #fff;
-    }
-    .year-section {
-    animation: fadeIn 0.3s;
-    }
-    @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-    }
-    h4 {
-    margin-top: 18px;
-    color: #4f8cff;
-    font-weight: 600;
-    }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="header-bar">
-                <h2>Dashboard</h2>
-                <!-- <div id="user-email" class="user-email"></div> -->
-                <div class="header-actions">
-                    <button onclick="logout()" class="btn logout-btn">Logout</button>
-                    <button id="dashboard-btn" onclick="window.location.href='index.html'" class="btn dashboard-btn">Home</button>
+<body class="app-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="aspirawidestyle.png" alt="Aspira Roadmaps" class="nav-logo-img">
+                </a>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-links" aria-label="Primary navigation">
+                    <a href="index.html#programs">Roadmaps</a>
+                    <a href="index.html#partners">Features</a>
+                    <a href="index.html#team">Why Aspira</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+                <div class="nav-auth header-actions">
+                    <button onclick="logout()" class="nav-btn logout-btn">Logout</button>
+                    <button onclick="window.location.href='index.html'" class="nav-btn primary-btn">Home</button>
                 </div>
             </div>
-        </header>
-        <main>
+        </div>
+    </nav>
+    <main class="dashboard-page">
+        <section class="container dashboard-shell">
+            <header class="dashboard-header">
+                <div>
+                    <p class="eyebrow">Aspira Roadmaps</p>
+                    <h1>Dashboard</h1>
+                </div>
+            </header>
             <div id="user-info"></div>
             <div id="roadmap-dashboard"></div>
             <div id="tracker"></div>
-        </main>
-    </div>
+        </section>
+    </main>
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="scroll-to-top">
-                        <img src="aspirawidestyle.png" alt="Aspira" class="footer-logo">
-                    </div>
+                    <button class="footer-logo-button scroll-to-top" type="button" aria-label="Scroll to top">
+                        <img src="aspirawidestyle.png" alt="Aspira Roadmaps" class="footer-logo">
+                    </button>
                     <p>Empowering students to plan their future with confidence.</p>
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
-                    <a href="privacy.html" target="_blank">Privacy Policy</a>
-                    <a href="tos.html" target="_blank">Terms of Service</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="tos.html">Terms of Service</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Aspira. All rights reserved. Made with ❤️ for ambitious students.</p>
+                <p>&copy; 2026 Aspira Roadmaps. All rights reserved.</p>
             </div>
         </div>
     </footer>

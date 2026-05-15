@@ -582,6 +582,22 @@ let currentQuestion = 0;
 let userAnswers = [];
 let latestMilestones = null; // Store milestones after quiz completion
 
+function showLandingPage(targetId = 'programs') {
+    document.getElementById('quiz-section')?.classList.add('hidden');
+    document.getElementById('results-section')?.classList.add('hidden');
+    document.querySelector('.next-button-container')?.remove();
+    document.querySelectorAll('main > section').forEach(section => {
+        if (section.id !== 'quiz-section' && section.id !== 'results-section') {
+            section.classList.remove('hidden');
+        }
+    });
+    const target = document.getElementById(targetId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+    return false;
+}
+
 // Initialize the quiz
 function startQuiz() {
     // Hide all main sections and show quiz
@@ -589,6 +605,7 @@ function startQuiz() {
         section.classList.add('hidden');
     });
     document.getElementById('quiz-section').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     showQuestion();
 }
 
@@ -625,7 +642,7 @@ function showQuestion() {
         nextButton.onclick = () => nextQuestion();
         
         nextButtonContainer.appendChild(nextButton);
-        document.getElementById('quiz-section').appendChild(nextButtonContainer);
+        document.querySelector('.quiz-container').appendChild(nextButtonContainer);
     }
 
     updateProgress();
@@ -994,9 +1011,8 @@ async function showResults() {
                 if (!cta) {
                     cta = document.createElement('div');
                     cta.id = 'save-cta';
-                    cta.style.margin = '2rem 0 0 0';
-                    cta.style.textAlign = 'center';
-                    cta.innerHTML = `<div style="background:var(--lighter-blue);padding:1.2rem 1rem;border-radius:10px;max-width:400px;margin:0 auto 1.5rem auto;font-size:1.1em;color:var(--primary-blue);font-weight:500;box-shadow:0 2px 8px rgba(37,99,235,0.1);">Want to keep your roadmap? <span style='font-weight:600;'>Sign up to save your results!</span></div>`;
+                    cta.className = 'save-roadmap-cta';
+                    cta.innerHTML = `<div>Want to keep your roadmap? <span>Sign up to save your results!</span></div>`;
                     resultsSection.insertBefore(cta, resultsSection.firstChild);
                 }
             }
@@ -1567,6 +1583,10 @@ function logout() {
   });
 }
 
-document.querySelector('.scroll-to-top').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+const scrollToTopControl = document.querySelector('.scroll-to-top');
+
+if (scrollToTopControl) {
+  scrollToTopControl.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}

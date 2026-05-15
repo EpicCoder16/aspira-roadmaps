@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aspira - Your High School Path Finder</title>
+    <title>Aspira Roadmaps - Your High School Path Finder</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -51,10 +51,16 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="index.html">
-                    <img src="aspirawidestyle.png" alt="Aspira Logo" class="nav-logo-img">
+                    <img src="aspirawidestyle.png" alt="Aspira Roadmaps" class="nav-logo-img">
                 </a>
             </div>
             <div class="nav-menu" id="nav-menu">
+                <div class="nav-links" aria-label="Primary navigation">
+                    <a href="#programs" onclick="return showLandingPage('programs')">Roadmaps</a>
+                    <a href="#partners" onclick="return showLandingPage('partners')">Features</a>
+                    <a href="#team" onclick="return showLandingPage('team')">Why Aspira</a>
+                    <a href="#contact" onclick="return showLandingPage('contact')">Contact</a>
+                </div>
                 <div class="nav-user" id="nav-user" style="display: none;">
                     <span id="user-email" class="user-email"></span>
                     <button onclick="logout()" class="nav-btn logout-btn">Logout</button>
@@ -72,7 +78,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeAuthModal()">&times;</span>
             <div class="auth-container">
-                <h2>Welcome to Aspira</h2>
+                <h2>Welcome to Aspira Roadmaps</h2>
                 <p>Login or create an account to save your roadmap</p>
                 <input type="email" id="email" placeholder="Email" />
                 <input type="password" id="password" placeholder="Password" />
@@ -85,154 +91,89 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
-        <section class="hero" data-aos="fade-up">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Plan Your Future with Confidence</h1>
-                    <p class="hero-subtitle">Discover the perfect clubs, create your 4-year roadmap, and track your progress toward college success with AI-powered guidance.</p>
-                    <div class="hero-buttons">
-                        <button onclick="startQuiz()" class="btn primary-btn">Get Started</button>
-                        <button onclick="scrollToFeatures()" class="btn secondary-btn">Explore Features</button>
+        <section class="pantheon-hero academy-wash" id="programs">
+            <div class="pillar pillar-left" aria-hidden="true"></div>
+            <div class="pillar pillar-right" aria-hidden="true"></div>
+            <div class="pantheon-hero-inner">
+                <p class="eyebrow">Personalized. Strategic. Clear.</p>
+                <h1 class="pantheon-title">Your High School Path, <em>Clearly Mapped</em></h1>
+                <p class="pantheon-subtitle">Build a personalized four-year roadmap for clubs, courses, competitions, and college goals with AI-powered guidance.</p>
+                <div class="institution-block" id="partners">
+                    <div class="institution-label"><span></span>Guidance across every part of your journey<span></span></div>
+                    <div class="institution-logo-mask" aria-label="Aspira planning areas">
+                        <div class="institution-logos">
+                            <strong class="harvard">Courses<br><small>Planning</small></strong>
+                            <strong class="mit">Clubs</strong>
+                            <strong class="princeton">College<br><small>Goals</small></strong>
+                            <strong class="yale">Competitions</strong>
+                            <strong class="berkeley">Roadmaps<br><small>4-Year Plan</small></strong>
+                            <strong class="ucla">AI<br><small>Guidance</small></strong>
+                            <strong class="harvard" aria-hidden="true">Courses<br><small>Planning</small></strong>
+                            <strong class="mit" aria-hidden="true">Clubs</strong>
+                            <strong class="princeton" aria-hidden="true">College<br><small>Goals</small></strong>
+                            <strong class="yale" aria-hidden="true">Competitions</strong>
+                            <strong class="berkeley" aria-hidden="true">Roadmaps<br><small>4-Year Plan</small></strong>
+                            <strong class="ucla" aria-hidden="true">AI<br><small>Guidance</small></strong>
+                        </div>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <video autoplay muted loop playsinline class="hero-video pulse">
+            </div>
+        </section>
+
+        <section class="challenge-section" id="team">
+            <div class="challenge-wave" aria-hidden="true"></div>
+            <div class="challenge-container">
+                <div class="challenge-copy">
+                    <p class="gold-kicker">The Challenge</p>
+                    <h2>The Problem with High School Planning</h2>
+                    <ul>
+                        <li>Students juggle courses, clubs, tests, and applications without one clear plan.</li>
+                        <li>Extracurricular choices are hard to compare across interests and goals.</li>
+                        <li>College preparation often feels scattered until deadlines are already close.</li>
+                    </ul>
+                </div>
+                <div class="challenge-media">
+                    <video autoplay muted loop playsinline class="challenge-video">
                         <source src="aspira ui updated demo.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                 </div>
-            </div>
-        </section>
-        <!-- Trust & Stats Section -->
-        <section class="stats" data-aos="fade-up">
-            <div class="stats-container">
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
-                    <i class="fas fa-users stat-icon"></i>
-                    <h3>140+</h3>
-                    <p>Active Students</p>
-                </div>
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
-                    <i class="fas fa-eye stat-icon"></i>
-                    <h3>570+</h3>
-                    <p>Views</p>
-                </div>
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
-                    <i class="fas fa-chart-line stat-icon"></i>
-                    <h3>200+</h3>
-                    <p>Roadmaps Created</p>
-                </div>
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
-                    <i class="fas fa-star stat-icon"></i>
-                    <h3>4.8/5</h3>
-                    <p>Student Rating</p>
+                <div class="metric-row" aria-label="Aspira outcomes">
+                    <div><strong>140+</strong><span>Active Students</span></div>
+                    <div><strong>200+</strong><span>Roadmaps Created</span></div>
+                    <div><strong>570+</strong><span>Views</span></div>
+                    <div><strong>4.8/5</strong><span>Student Rating</span></div>
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section class="features" id="features" data-aos="fade-up">
-            <div class="features-container">
-                <h2 class="section-title">Why Choose Aspira?</h2>
-                <p class="section-subtitle">Everything you need to plan your high school journey and beyond</p>
-                <div class="features-grid">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                        <i class="fas fa-route feature-icon"></i>
-                        <h3>Personalized Roadmap</h3>
-                        <p>Get a custom 4-year plan tailored to your interests, goals, and college aspirations.</p>
-                    </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                        <i class="fas fa-calendar-alt feature-icon"></i>
-                        <h3>4-Year Planning</h3>
-                        <p>Strategic timeline covering academics, extracurriculars, and college preparation.</p>
-                    </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                        <i class="fas fa-chart-bar feature-icon"></i>
-                        <h3>Goal Tracking</h3>
-                        <p>Monitor your progress and celebrate achievements with our interactive dashboard.</p>
-                    </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                        <i class="fas fa-robot feature-icon"></i>
-                        <h3>Expert AI Guidance</h3>
-                        <p>Receive intelligent recommendations powered by advanced AI technology.</p>
-                    </div>
+        <section class="partnering-section academy-wash" id="contact">
+            <div class="pillar pillar-left" aria-hidden="true"></div>
+            <div class="pillar pillar-right" aria-hidden="true"></div>
+            <div class="partnering-container">
+                <h2>Planning with Aspira</h2>
+                <div class="faq-list">
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Aspira asks about your interests, strengths, college goals, and activities, then turns those answers into a practical four-year plan.">How does Aspira create my roadmap?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="The roadmap covers course planning, clubs, competitions, summer opportunities, leadership milestones, and college preparation timing.">What is included in a roadmap?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Yes. You can revisit the quiz and update your plan as your goals, interests, and achievements change.">Can I update my plan later?<span>+</span></button>
+                    <button class="faq-item" type="button" aria-expanded="false" onclick="toggleFaq(this)" data-answer="Aspira is built for ambitious high school students who want a clearer path through academics, extracurriculars, and college preparation.">Who is Aspira for?<span>+</span></button>
                 </div>
             </div>
         </section>
 
-        <!-- How It Works Section -->
-        <section class="how-it-works" data-aos="fade-up">
-            <div class="how-it-works-container">
-                <h2 class="section-title">How It Works</h2>
-                <p class="section-subtitle">Three simple steps to your personalized roadmap</p>
-                <div class="steps-container">
-                    <div class="step" data-aos="fade-right" data-aos-delay="100">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>Take the Quiz</h3>
-                            <p>Answer questions about your interests, goals, and college preferences.</p>
-                        </div>
-                    </div>
-                    <div class="step" data-aos="fade-right" data-aos-delay="200">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>Get Your Roadmap</h3>
-                            <p>Receive a personalized 4-year plan with club recommendations and milestones.</p>
-                        </div>
-                    </div>
-                    <div class="step" data-aos="fade-right" data-aos-delay="300">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>Track & Succeed</h3>
-                            <p>Monitor your progress and update your achievements in your dashboard.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="testimonials" data-aos="fade-up">
-            <div class="testimonials-container">
-                <h2 class="section-title">What Students Say</h2>
-                <div class="testimonials-grid">
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="testimonial-content">
-                            <p>"Aspira helped me plan my path to Georgia Tech. The AI recommendations were spot-on!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <h4>Rohit S.</h4>
-                            <p>Georgia Tech Student</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="testimonial-content">
-                            <p>""Finally, a clear roadmap for my business goals. Love the competition suggestions."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <h4>Judy M.</h4>
-                            <p>UPenn Wharton Student</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="testimonial-content">
-                            <p>"The extracurricular planning feature is a game-changer. So organized!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <h4>Neel G.</h4>
-                            <p>UC Berkeley Student</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta" data-aos="fade-up">
-            <div class="cta-container">
-                <h2>Ready to Plan Your Future?</h2>
-                <p>Join hundreds of students who are already building their path to success</p>
-                <button onclick="startQuiz()" class="btn primary-btn large">Start Planning Now</button>
+        <section class="contact-section">
+            <div class="contact-grid">
+                <a class="contact-card" href="mailto:aspira.roadmaps@gmail.com">
+                    <span class="contact-icon"><i class="far fa-envelope"></i></span>
+                    <strong>Email Us</strong>
+                    <span>Get in touch via email</span>
+                    <b>aspira.roadmaps@gmail.com</b>
+                </a>
+                <button class="contact-card" type="button" onclick="startQuiz()">
+                    <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                    <strong>Start Planning</strong>
+                    <span>Take the roadmap quiz</span>
+                    <b>Build your plan</b>
+                </button>
             </div>
         </section>
 
@@ -277,37 +218,39 @@
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="scroll-to-top">
-                        <img src="aspirawidestyle.png" alt="Aspira" class="footer-logo">
-                    </div>
+                    <button class="footer-logo-button scroll-to-top" type="button" aria-label="Scroll to top">
+                        <img src="aspirawidestyle.png" alt="Aspira Roadmaps" class="footer-logo">
+                    </button>
                     <p>Empowering students to plan their future with confidence.</p>
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
-                    <a href="privacy.html" target="_blank">Privacy Policy</a>
-                    <a href="tos.html" target="_blank">Terms of Service</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="tos.html">Terms of Service</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Aspira. All rights reserved. Made with ❤️ for ambitious students.</p>
+                <p>&copy; 2026 Aspira Roadmaps. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=aspira-roadmaps"></script>
     <script>
         // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        if (window.AOS) {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        }
 
         // Smooth scroll function
         function scrollToFeatures() {
-            document.getElementById('features').scrollIntoView({ 
+            document.getElementById('programs').scrollIntoView({ 
                 behavior: 'smooth' 
             });
         }
@@ -326,6 +269,22 @@
             const modal = document.getElementById('auth-modal');
             if (event.target === modal) {
                 closeAuthModal();
+            }
+        }
+
+        function toggleFaq(item) {
+            const isOpen = item.getAttribute('aria-expanded') === 'true';
+            const existing = item.nextElementSibling;
+            if (existing && existing.classList.contains('faq-answer')) {
+                existing.remove();
+            }
+            item.setAttribute('aria-expanded', String(!isOpen));
+            item.querySelector('span').textContent = isOpen ? '+' : '-';
+            if (!isOpen) {
+                const answer = document.createElement('p');
+                answer.className = 'faq-answer';
+                answer.textContent = item.dataset.answer;
+                item.insertAdjacentElement('afterend', answer);
             }
         }
     </script>

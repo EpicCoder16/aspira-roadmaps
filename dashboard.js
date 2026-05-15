@@ -233,6 +233,10 @@ async function generateAlternative(milestoneName) {
   return "Try a different approach or seek opportunities outside of school for: " + milestoneName;
 }
 
-document.querySelector('.scroll-to-top').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+const scrollToTopControl = document.querySelector('.scroll-to-top');
+
+if (scrollToTopControl) {
+  scrollToTopControl.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
